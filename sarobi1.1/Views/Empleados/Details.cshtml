@@ -5,31 +5,113 @@
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
 
-<h2>Details</h2>
+<h2>Detalle Empleado</h2>
 
 <div>
-    <h4>Empleado</h4>
     <hr />
     <dl class="dl-horizontal">
         <dt>
-            @Html.DisplayNameFor(model => model.PrimerNombre)
+            Nombre Completo:
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.PrimerNombre)
+            @Html.DisplayFor(model => model.FullName)
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.PrimerApellido)
+            Fecha de Nacimiento:
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.PrimerApellido)
+            @Html.DisplayFor(model => model.FechaNacimiento)
+        </dd>
+
+        <dt>
+            Sexo:
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Sexo)
+        </dd>
+
+        <dt>
+            Número de Cédula:
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.NumeroIdentificacion)
+        </dd>
+
+        <dt>
+            Nacionalidad:
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Nacionalidad)
+        </dd>
+
+        <dt>
+            Teléfono 1:
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Telefono1)
+        </dd>
+
+        <dt>
+            Teléfono 2:
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Telefono2)
+        </dd>
+
+        <dt>
+            Dirección:
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Direccion)
+        </dd>
+
+        <dt>
+            Puesto:
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Puesto)
+        </dd>
+
+        <dt>
+            Tipo Empleado:
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TipoEmpleado)
+        </dd>
+
+        <dt>
+            Fecha de Contratación:
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.FechaContratacion)
+        </dd>
+
+        <dt>
+            Recomendaciones:
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Recomendaciones)
         </dd>
 
     </dl>
 </div>
+
+<br />
+
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.ID }) |
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("Editar", "Edit", new { id = Model.ID }) |
+    @Html.ActionLink("Regresar", "Index")
 </p>
