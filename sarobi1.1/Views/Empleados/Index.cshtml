@@ -5,34 +5,60 @@
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
 
-<h2>Empleados</h2>
+@using (Html.BeginForm("Index", "Empleados", FormMethod.Get))
+{
+    <br />
+    <p>
+        <h2 style="display:inline;margin-right:30px;">Empleados</h2>
+        <div class="input-group" style="display:inline-block;margin-left:200px;margin-top:-30px;">
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-<table class="table">
+            @Html.TextBox("SearchString", ViewBag.CurrentFilter as string, new { @class = "form-control", placeholder = "Buscar.." })<span><button class="btn btn-primary" type="submit" style="display:inline;"><span class="glyphicon glyphicon-search"></span> </button></span>
+            <button type="button" class="btn btn-default" onclick="location.href='@Url.Action("Create")'" style="margin-left:800px;margin-top:-60px;"><span class="glyphicon glyphicon-plus"></span> Crear</button>
+        </div>
+
+    </p>
+}
+<br /><br />
+
+<table class="table table-condensed table-hover">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.PrimerNombre)
+            @Html.ActionLink("Nombre Completo", "Index", new { sortOrder = ViewBag.NameSortParm, currentFilter = ViewBag.CurrentFilter })
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.PrimerApellido)
+            @Html.ActionLink("Sexo", "Index", new { sortOrder = ViewBag.NameSortParm })
         </th>
+        <th>
+            @Html.ActionLink("Cédula", "Index", new { sortOrder = ViewBag.NameSortParm, currentFilter = ViewBag.CurrentFilter })
+        </th>
+
+        <th>
+            @Html.ActionLink("Puesto", "Index", new { sortOrder = ViewBag.PuestoSortParm, currentFilter = ViewBag.CurrentFilter })
+        </th>
+
         <th></th>
     </tr>
 
-@foreach (var item in Model) {
+@foreach (var item in Model)
+{
     <tr>
         <td>
-            @Html.DisplayFor(modelItem => item.PrimerNombre)
+            @Html.DisplayFor(modelItem => item.FullName)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.PrimerApellido)
+            @Html.DisplayFor(modelItem => item.Sexo)
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.ID }) |
-            @Html.ActionLink("Details", "Details", new { id=item.ID }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.ID })
+            @Html.DisplayFor(modelItem => item.NumeroIdentificacion)
+        </td>
+
+        <td>
+            @Html.DisplayFor(modelItem => item.Puesto)
+        </td>
+        <td>
+            @Html.ActionLink(" ", "Edit", new { id = item.ID }, new { @class = "glyphicon glyphicon-edit" }) |
+            @Html.ActionLink(" ", "Details", new { id = item.ID }, new { @class = "glyphicon glyphicon-list-alt" }) |
+            @Html.ActionLink(" ", "Delete", new { id = item.ID }, new { @class = "glyphicon glyphicon-trash"})
         </td>
     </tr>
 }

@@ -8,6 +8,7 @@ using System.Web;
 using System.Web.Mvc;
 using sarobi1._1.DAL;
 using sarobi1._1.Models;
+using PagedList;
 
 namespace sarobi1._1.Controllers
 {
@@ -16,9 +17,49 @@ namespace sarobi1._1.Controllers
         private SarobiContext db = new SarobiContext();
 
         // GET: Empleados
-        public ActionResult Index()
+        [Authorize]
+        public ViewResult Index(string sortOrder, string currentFilter, string searchString, int? page)
         {
-            return View(db.Empleados.ToList());
+            ViewBag.CurrentSort = sortOrder;
+            ViewBag.NameSortParm = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
+            ViewBag.PuestoSortParm = sortOrder == "Puesto" ? "puesto_desc" : "Puesto";
+
+            if (searchString != null)
+            {
+                page = 1;
+            }
+            else
+            {
+                searchString = currentFilter;
+            }
+
+            ViewBag.CurrentFilter = searchString;
+
+            var empleados = from s in db.Empleados
+                            select s;
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                empleados = empleados.Where(s => s.PrimerNombre.Contains(searchString)
+                                       || s.PrimerApellido.Contains(searchString)
+                                       || s.SegundoApellido.Contains(searchString)
+                                       || s.Puesto.Contains(searchString)
+                                       || s.NumeroIdentificacion.Contains(searchString));
+            }
+            switch (sortOrder)
+            {
+                case "name_desc":
+                    empleados = empleados.OrderByDescending(s => s.PrimerNombre);
+                    break;
+                case "puesto_desc":
+                    empleados = empleados.OrderByDescending(s => s.Puesto);
+                    break;
+                default:
+                    empleados = empleados.OrderBy(s => s.PrimerNombre);
+                    break;
+            }
+            int pageSize = 5;
+            int pageNumber = (page ?? 1);
+            return View(empleados.ToPagedList(pageNumber, pageSize));
         }
 
         // GET: Empleados/Details/5
@@ -43,11 +84,10 @@ namespace sarobi1._1.Controllers
         }
 
         // POST: Empleados/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ID,PrimerNombre,PrimerApellido")] Empleado empleado)
+        public ActionResult Create([Bind(Include = "ID,PrimerNombre,PrimerApellido,SegundoApellido,FechaNacimiento,Sexo,TipoIdentificacion,NumeroIdentificacion,Nacionalidad,Telefono1,Telefono2,Direccion,Puesto,TipoEmpleado,FechaContratacion,Recomendaciones,Foto,AntecedentesPenales")] Empleado empleado)
         {
             if (ModelState.IsValid)
             {
@@ -75,11 +115,9 @@ namespace sarobi1._1.Controllers
         }
 
         // POST: Empleados/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ID,PrimerNombre,PrimerApellido")] Empleado empleado)
+        public ActionResult Edit([Bind(Include = "ID, PrimerNombre, PrimerApellido, SegundoApellido, FechaNacimiento, Sexo, TipoIdentificacion, NumeroIdentificacion, Nacionalidad, Telefono1, Telefono2, Direccion, Puesto, TipoEmpleado, FechaContratacion, Recomendaciones, Foto, AntecedentesPenales")] Empleado empleado)
         {
             if (ModelState.IsValid)
             {
