@@ -1,0 +1,58 @@
+﻿@model sarobi1._1.Models.UserAndRolesDTO
+@{
+    ViewBag.Title = "Roles";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    <br />
+    @Html.ValidationSummary(true,"",new { @class = "text-danger" })
+
+
+    <div class="form-group">
+        <h4>  @Html.LabelFor(model => model.UserName, "Usuario:", htmlAttributes: new { @class = "control-label col-md-2" })</h4>
+
+        <div class="col-md-2" style="margin-left:-100px; margin-top:-10px;">
+            <h4>  @Html.DisplayFor(model => model.UserName, new { htmlAttributes = new { @class = "form-control" } })</h4>
+      </div>
+      </div>
+
+    <br/> <br />
+
+    <div style="display:inline-flex;">
+        <input type="submit" value="Agregar Rol" class="btn btn-success" style="margin-right:10px;" />
+        @Html.DropDownList("AddRole", null, new { @class = "form-control" })
+    </div>
+
+    <br /> <br /> <br />
+
+    <table class="table table-bordered">
+        <tr>
+            <th>
+                Roles Existentes
+            </th>
+            <th>
+                Opciones
+            </th>
+        </tr>
+
+        @foreach (var item in Model.colUserRoleDTO)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.RoleName)
+                </td>
+                <td>
+                    @if (!((Model.UserName.ToLower() == this.User.Identity.Name.ToLower()) && item.RoleName == "Administrator") && item.RoleName != "No se encontraron roles")
+                    {
+                        @Html.ActionLink("Borrar", "DeleteRole", new { UserName = item.UserName, RoleName = item.RoleName },new{onclick = "return confirm('Estás seguro deseas borrar este rol?');" })
+                    }
+                </td>
+            </tr>
+        }
+    </table>
+}
+
+@Html.ActionLink("Regresar", "Index", new { UserName = Model.UserName })

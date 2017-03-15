@@ -8,6 +8,7 @@ namespace sarobi1._1.Controllers
 {
     public class HomeController : Controller
     {
+        [Authorize]
         public ActionResult Index()
         {
             return View();
