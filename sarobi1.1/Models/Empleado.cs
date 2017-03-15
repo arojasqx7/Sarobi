@@ -12,5 +12,6 @@ namespace sarobi1._1.Models
         public string PrimerApellido { get; set; }
 
         public virtual ICollection<Base> Bases { get; set; }
+
     }
 }

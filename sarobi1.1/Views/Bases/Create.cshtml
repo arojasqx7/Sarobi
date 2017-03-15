@@ -29,9 +29,11 @@
                     <tr>
                         <th>Empleado</th>
                         <th>Seleccionar</th>
+                        <th>Tracking</th>
                         @{
                             int cnt = 0;
                             List<sarobi1._1.Models.AssignedEmpleadoData> empleados = ViewBag.Empleados;
+                            //List<sarobi1._1.Models.AssignedTrackingData> trackings = ViewBag.Tracking;
 
                             foreach (var emp in empleados)
                             {
@@ -49,7 +51,14 @@
                                            value="@emp.EmpleadoID"
                                            @(Html.Raw(emp.Assigned ? "checked=\"checked\"" : "")) />
                                         @: </td>
-                    }
+
+                           
+
+               
+                               
+
+                            }
+
                             @:</tr>
                         }
                     </table>
@@ -62,7 +71,7 @@
             </div>
         </div>
     </div>
-}
+                            }
 
 <div>
     @Html.ActionLink("Back to List", "Index")

@@ -18,35 +18,36 @@ namespace sarobi1._1.Migrations
 
         protected override void Seed(sarobi1._1.DAL.SarobiContext context)
         {
-            var empleados = new List<Empleado>
-            {
-            new Empleado
-            { PrimerNombre = "Carson",PrimerApellido="Alexander" }
-            };
+        //    var empleados = new List<Empleado>
+        //    {
+        //    new Empleado
+        //    { PrimerNombre = "Carson",PrimerApellido="Alexander" }
+        //    };
 
-            empleados.ForEach(s => context.Empleados.AddOrUpdate(p => p.PrimerApellido, s));
-            context.SaveChanges();
+        //    empleados.ForEach(s => context.Empleados.AddOrUpdate(p => p.PrimerApellido, s));
+        //    context.SaveChanges();
 
-            var bases = new List<Base>
-            {
-            new Base
-            { Nombre = "Sapiens" }
-            };
+        //    var bases = new List<Base>
+        //    {
+        //    new Base
+        //    { Nombre = "Sapiens" }
+        //    };
 
-            bases.ForEach(s => context.Bases.AddOrUpdate(p => p.Nombre, s));
-            context.SaveChanges();
-
-
-              }
+        //    bases.ForEach(s => context.Bases.AddOrUpdate(p => p.Nombre, s));
+        //    context.SaveChanges();
 
 
-        void AddOrUpdateBase(SarobiContext context, string empleadoNombre, string baseNombre)
-        {
-            var emp = context.Empleados.SingleOrDefault(c => c.PrimerNombre == empleadoNombre);
-            var bas = emp.Bases.SingleOrDefault(i => i.Nombre == baseNombre);
-            if (bas == null)
-                emp.Bases.Add(context.Bases.Single(i => i.Nombre == baseNombre));
+        //      }
 
-        }
+
+        //void AddOrUpdateBase(SarobiContext context, string empleadoNombre, string baseNombre)
+        //{
+        //    var emp = context.Empleados.SingleOrDefault(c => c.PrimerNombre == empleadoNombre);
+        //    var bas = emp.Bases.SingleOrDefault(i => i.Nombre == baseNombre);
+        //    if (bas == null)
+        //        emp.Bases.Add(context.Bases.Single(i => i.Nombre == baseNombre));
+
+        //}
     }
+}
 }

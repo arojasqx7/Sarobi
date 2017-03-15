@@ -205,9 +205,13 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201703101810006_initial1.cs" />
-    <Compile Include="Migrations\201703101810006_initial1.Designer.cs">
-      <DependentUpon>201703101810006_initial1.cs</DependentUpon>
+    <Compile Include="Migrations\201703150447040_initial1.cs" />
+    <Compile Include="Migrations\201703150447040_initial1.Designer.cs">
+      <DependentUpon>201703150447040_initial1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201703150451565_initial2.cs" />
+    <Compile Include="Migrations\201703150451565_initial2.Designer.cs">
+      <DependentUpon>201703150451565_initial2.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -215,6 +219,7 @@
     <Compile Include="Models\Base.cs" />
     <Compile Include="Models\BaseIndexData.cs" />
     <Compile Include="Models\Empleado.cs" />
+    <Compile Include="Models\EmpleadoBase1.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\Tracking.cs" />
@@ -234,9 +239,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
-    <Content Include="Scripts\jquery-1.10.2.js" />
-    <Content Include="Scripts\jquery-1.10.2.min.js" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
+    <Content Include="Scripts\jquery-2.2.4.js" />
+    <Content Include="Scripts\jquery-2.2.4.min.js" />
     <Content Include="Scripts\jquery.validate.js" />
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
@@ -304,11 +309,13 @@
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
     <Content Include="packages.config" />
     <None Include="Project_Readme.html" />
-    <Content Include="Scripts\jquery-1.10.2.min.map" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201703101810006_initial1.resx">
-      <DependentUpon>201703101810006_initial1.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201703150447040_initial1.resx">
+      <DependentUpon>201703150447040_initial1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201703150451565_initial2.resx">
+      <DependentUpon>201703150451565_initial2.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

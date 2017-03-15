@@ -21,6 +21,23 @@ namespace sarobi1._1.Controllers
             return View(db.Trackings.ToList());
         }
 
+        public JsonResult GetBases()
+        {
+            var bases = from b in db.Bases select new { b.ID, b.Nombre };
+            return Json(bases.ToList(), JsonRequestBehavior.AllowGet);
+        }
+
+
+        public JsonResult GetEmpleados(int id_base)
+        {
+
+            var empleados = from a in db.EmpleadosBases1 where a.BaseID == id_base select new { a.Empleado.ID,a.Empleado.PrimerNombre};
+            return Json(empleados.ToList(), JsonRequestBehavior.AllowGet);
+            Console.Write(empleados.Count());
+        }
+
+
+
         // GET: Trackings/Details/5
         public ActionResult Details(int? id)
         {
@@ -39,15 +56,16 @@ namespace sarobi1._1.Controllers
         // GET: Trackings/Create
         public ActionResult Create()
         {
+            ViewBag.ID_Base= new SelectList(db.Bases, "Id", "Nombre");
+            ViewBag.ID_Empleado = new SelectList(db.Empleados, "Id", "PrimerNombre");
             return View();
         }
 
         // POST: Trackings/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ID,Horas,Fecha")] Tracking tracking)
+        public ActionResult Create([Bind(Include = "ID,Horas,Fecha,ID_Base,ID_Empleado")] Tracking tracking)
         {
             if (ModelState.IsValid)
             {
@@ -56,6 +74,8 @@ namespace sarobi1._1.Controllers
                 return RedirectToAction("Index");
             }
 
+            ViewBag.ID_Base = new SelectList(db.Bases, "Id", "Nombre", tracking.ID_Base);
+            ViewBag.ID_Empleado = new SelectList(db.Empleados, "Id", "PrimerNombre", tracking.ID_Empleado);
             return View(tracking);
         }
 
@@ -79,7 +99,7 @@ namespace sarobi1._1.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ID,Horas,Fecha")] Tracking tracking)
+        public ActionResult Edit([Bind(Include = "ID,Horas,Fecha,ID_Base,ID_Empleado")] Tracking tracking)
         {
             if (ModelState.IsValid)
             {

@@ -40,9 +40,10 @@ namespace sarobi1._1.Controllers
         // GET: Bases/Create
         public ActionResult Create()
         {
-            var baseee = new Base();
-            baseee.Empleado = new List<Empleado>();
-            PopulateAssignedEmpleadoData(baseee);
+            var basee = new Base();
+            basee.Empleado = new List<Empleado>();
+
+            PopulateAssignedEmpleadoData(basee);
             return View();
         }
 
@@ -54,6 +55,7 @@ namespace sarobi1._1.Controllers
             if (selectedEmpleados != null)
             {
                 basee.Empleado = new List<Empleado>();
+
                 foreach (var emp in selectedEmpleados)
                 {
                     var empToAdd = db.Empleados.Find(int.Parse(emp));
@@ -77,11 +79,12 @@ namespace sarobi1._1.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            // Base @base = db.Bases.Find(id);
+
             Base basee = db.Bases
             .Include(i => i.Empleado)
             .Where(i => i.ID == id)
             .Single();
+
             PopulateAssignedEmpleadoData(basee);
 
             if (basee == null)
@@ -111,7 +114,7 @@ namespace sarobi1._1.Controllers
         // POST: Bases/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int? id, string[] selectedEmpleados)
+        public ActionResult Edit(int? id, string[] selectedEmpleados, string[] selectedTracking)
         {
             if (id == null)
             {
@@ -122,7 +125,8 @@ namespace sarobi1._1.Controllers
                .Where(i => i.ID == id)
                .Single();
 
-            if (TryUpdateModel(BaseToUpdate, "",
+
+            if (TryUpdateModel(BaseToUpdate,"",
                new string[] { "Nombre" }))
             {
                 try
@@ -161,6 +165,7 @@ namespace sarobi1._1.Controllers
                     if (!baseEmpleados.Contains(emp.ID))
                     {
                         BaseToUpdate.Empleado.Add(emp);
+
                     }
                 }
                 else
@@ -172,6 +177,8 @@ namespace sarobi1._1.Controllers
                 }
             }
         }
+
+
 
         // GET: Bases/Delete/5
         public ActionResult Delete(int? id)

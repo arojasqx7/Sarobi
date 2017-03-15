@@ -15,7 +15,7 @@
             @Html.DisplayNameFor(model => model.Nombre)
         </th>
         <th>Empleados</th>
-        <th></th>
+        <th>Opciones</th>
     </tr>
 
 @foreach (var item in Model) {
@@ -27,15 +27,18 @@
             @{
                 foreach (var emp in item.Empleado)
                 {
-                    @emp.ID @:  @emp.PrimerNombre <br />
+                     @emp.PrimerNombre <br />
                 }
             }
         </td>
+
+
+
         <td>
             @Html.ActionLink("Edit", "Edit", new { id=item.ID }) |
             @Html.ActionLink("Details", "Details", new { id=item.ID }) |
             @Html.ActionLink("Delete", "Delete", new { id=item.ID }) |
-            @Html.ActionLink("Tracking", "Edit", new { id = item.ID })
+            @Html.ActionLink("Tracking", "Create", "Trackings", new { id = item.ID },null)
         </td>
     </tr>
 }

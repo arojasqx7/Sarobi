@@ -31,7 +31,7 @@
                     <tr>
                         <th>Empleado</th>
                         <th>Seleccionar</th>
-
+                        <th>Tracking</th>
                         @{
                             int cnt = 0;
                             List<sarobi1._1.Models.AssignedEmpleadoData> empleados = ViewBag.Empleados;
@@ -51,7 +51,10 @@
                                            value="@emp.EmpleadoID"
                                            @(Html.Raw(emp.Assigned ? "checked=\"checked\"" : "")) />
                                         @:</td>
-                    }
+
+                              
+                            }
+
                             @:</tr>
                         }
                     </table>
