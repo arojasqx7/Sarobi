@@ -1,0 +1,71 @@
+﻿@model PagedList.IPagedList<sarobi1._1.Models.ExpandedUserDTO>
+@using PagedList.Mvc;
+<link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h2>Administración</h2>
+
+<br />
+<p>
+    @Html.ActionLink("Crear Usuario", "Create", null, new { @class = "btn btn-success" })
+    @Html.ActionLink("Crear Rol", "ViewAllRoles", null, new { @class = "btn btn-primary" })
+</p>
+<br />
+@using (Html.BeginForm("Index", "Admin", FormMethod.Get))
+{
+
+    <div class="form-group" style="display:inline-flex;">
+        @Html.TextBox("searchStringUserNameOrEmail", ViewBag.CurrentFilter as string, new { @class = "form-control", placeholder = "Buscar por email..." })<span><button class="btn btn-primary" type="submit" style="display:inline;margin-left:10px;"><span class="glyphicon glyphicon-search"></span> </button></span>
+    </div>
+
+
+}
+<br />
+
+<table class="table table-bordered table-hover">
+    <tr>
+        <th>
+            Email
+        </th>
+        <th>
+            Opciones
+        </th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Email)
+            </td>
+            <td>
+                @Html.ActionLink("Editar Accesos", "EditUser", new { UserName = item.UserName }) |
+                @Html.ActionLink("Editar Roles", "EditRoles", new { UserName = item.UserName }) |
+                @if ((item.UserName.ToLower() != this.User.Identity.Name.ToLower()))
+                {
+                    @Html.ActionLink("Borrar", "DeleteUser", new { UserName = item.UserName },
+                    new { onclick = "return confirm('Estás seguro deseas borrar este usuario?');" })
+                }
+            </td>
+        </tr>
+    }
+
+
+</table>
+<br />
+Página @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) de @Model.PageCount
+
+@Html.PagedListPager(Model,
+    page => Url.Action("Index",
+    new
+    {
+        page,
+        searchStringUserNameOrEmail = ViewBag.searchStringUserNameOrEmail,
+        currentFilter = ViewBag.CurrentFilter
+    }))
+<hr />
+
+

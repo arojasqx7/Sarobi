@@ -21,9 +21,15 @@
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Home", "Index", "Home")</li>
-                     <li>@Html.ActionLink("About", "About", "Home")</li>
-                    <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
+                    @*<li>@Html.ActionLink("Home", "Index", "Home")</li>*@
+                    <li>@Html.ActionLink("Empleados", "Index", "Empleados")</li>
+                    <li>@Html.ActionLink("Bases", "Index", "Bases")</li>
+                    <li>@Html.ActionLink("Tracking", "Create", "Trackings")</li>
+
+                        @if (User.IsInRole("Administrator"))
+                        {
+                            <li>@Html.ActionLink("Admin", "Index", "Admin")</li>
+                        }
                 </ul>
                 @Html.Partial("_LoginPartial")
             </div>
@@ -42,3 +48,5 @@
     @RenderSection("scripts", required: false)
 </body>
 </html>
+
+

@@ -1,0 +1,55 @@
+﻿@model IEnumerable<sarobi1._1.Models.RoleDTO>
+@{
+    ViewBag.Title = "Roles";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+@Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+
+<h2>Agregar Roles</h2>
+<br />
+<p>
+    @Html.ActionLink("Agregar Rol", "AddRole", null, new { @class = "btn btn-success" })
+</p>
+
+<br /><br />
+
+<table class="table table-bordered">
+    <tr>
+        <th>
+            Nombre del Rol
+        </th>
+        <th>
+            Opciones
+        </th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.RoleName)
+            </td>
+            <td>
+                @if (item.RoleName.ToLower() != "administrator")
+                {
+                    @Html.ActionLink("Borrar", "DeleteUserRole",
+                   new { RoleName = item.RoleName },
+                   new
+                   {
+                       onclick =
+                   "return confirm('Estás seguro deseas borrar este rol?');"
+                   })
+                }
+            </td>
+
+        </tr>
+    }
+
+
+</table>
+
+<br />
+
+@Html.ActionLink("Regresar", "Index")
+
