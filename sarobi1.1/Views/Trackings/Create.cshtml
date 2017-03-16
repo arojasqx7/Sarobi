@@ -1,14 +1,14 @@
 ﻿@model sarobi1._1.Models.Tracking
 
 @{
-    ViewBag.Title = "Create";
+    ViewBag.Title = "Crear Tracking";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
 
-<h2>Create</h2>
-
+<h2><span class="glyphicon glyphicon-time"></span>       Añadir Horas</h2>
+<link href="~/Content/bootstrap-datetimepicker.css" rel="stylesheet" />
 
             @using (Html.BeginForm()) { @Html.AntiForgeryToken()   <div class="form-horizontal">
-
 
                     <hr />
                     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
@@ -42,7 +42,7 @@
                     <div class="form-group">
                         @Html.LabelFor(model => model.Fecha, htmlAttributes: new { @class = "control-label col-md-2" })
                         <div class="col-md-10">
-                            @Html.EditorFor(model => model.Fecha, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.EditorFor(model => model.Fecha, new { htmlAttributes = new { @class = "form-control datetimepicker" } })
                             @Html.ValidationMessageFor(model => model.Fecha, "", new { @class = "text-danger" })
                         </div>
                     </div>
@@ -62,8 +62,16 @@
             @section Scripts {
                 @Scripts.Render("~/bundles/jqueryval")
                 <script src="~/Scripts/jquery-2.2.4.min.js"></script>
+                <script src="~/Scripts/moment.js"></script>
+                <script src="~/Scripts/moment-with-locales.js"></script>
+                <script src="~/Scripts/bootstrap-datetimepicker.min.js"></script>
+                <script src="~/Scripts/jquery.maskedinput.js"></script>
                 <script>
 
+                    $('.datetimepicker').datetimepicker({
+                        format: "YYYY/MM/DD",
+                        locale: 'es',
+                    });
 
                     $(function () {
                         $.ajax({
@@ -89,12 +97,11 @@
                         data: { ID_Base: $('#DropdownBase').val() },
                         success: function (data) {
                             $.each(data, function (index, value) {
-                                $('#DropdownEmpleado').append('<option value="' + value.ID + '">' + value.PrimerNombre + '</option>');
+                                $('#DropdownEmpleado').append('<option value="' + value.ID + '">' + value.FullName2 + '</option>');
                             });
                         }
                     });
                     });
-                    console.log($('#DropdownBase').val());
-                </script>
-            }
+            </script>
+ }
 

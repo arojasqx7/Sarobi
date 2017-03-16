@@ -9,6 +9,7 @@ using System.Web.Mvc;
 using sarobi1._1.DAL;
 using sarobi1._1.Models;
 using System.Data.Entity.Infrastructure;
+using PagedList;
 
 namespace sarobi1._1.Controllers
 {
@@ -17,9 +18,42 @@ namespace sarobi1._1.Controllers
         private SarobiContext db = new SarobiContext();
 
         // GET: Bases
-        public ActionResult Index()
+        public ViewResult Index(string sortOrder, string currentFilter, string searchString, int? page)
         {
-            return View(db.Bases.ToList());
+            ViewBag.CurrentSort = sortOrder;
+            ViewBag.NameSortParm = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
+
+            if (searchString != null)
+            {
+                page = 1;
+            }
+            else
+            {
+                searchString = currentFilter;
+            }
+
+            ViewBag.CurrentFilter = searchString;
+
+            var bases = from s in db.Bases
+                        select s;
+
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                bases = bases.Where(s => s.Nombre.Contains(searchString)
+                                    );
+            }
+            switch (sortOrder)
+            {
+                case "name_desc":
+                    bases = bases.OrderByDescending(s => s.Nombre);
+                    break;
+                default:
+                    bases = bases.OrderBy(s => s.Nombre);
+                    break;
+            }
+            int pageSize = 5;
+            int pageNumber = (page ?? 1);
+            return View(bases.ToPagedList(pageNumber, pageSize));
         }
 
         // GET: Bases/Details/5
@@ -44,13 +78,14 @@ namespace sarobi1._1.Controllers
             basee.Empleado = new List<Empleado>();
 
             PopulateAssignedEmpleadoData(basee);
+            ViewBag.ID_Supervisor = new SelectList(db.Empleados.Where(s => s.Puesto.Equals("Supervisor")), "Id", "FullName");
             return View();
         }
 
         // POST: Bases/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ID,Nombre")] Base basee, string[] selectedEmpleados)
+        public ActionResult Create([Bind(Include = "ID,Nombre,Encargado,Telefono,Direccion,ID_Supervisor")] Base basee, string[] selectedEmpleados)
         {
             if (selectedEmpleados != null)
             {
@@ -69,6 +104,7 @@ namespace sarobi1._1.Controllers
                 return RedirectToAction("Index");
             }
             PopulateAssignedEmpleadoData(basee);
+            ViewBag.ID_Supervisor = new SelectList(db.Empleados.Where(s => s.Puesto.Equals("Supervisor")), "Id", "FullName");
             return View(basee);
         }
 
@@ -91,6 +127,7 @@ namespace sarobi1._1.Controllers
             {
                 return HttpNotFound();
             }
+            ViewBag.ID_Supervisor = new SelectList(db.Empleados.Where(s => s.Puesto.Equals("Supervisor")), "Id", "FullName");
             return View(basee);
         }
 
@@ -104,7 +141,7 @@ namespace sarobi1._1.Controllers
                 viewModel.Add(new AssignedEmpleadoData
                 {
                     EmpleadoID = emp.ID,
-                    Nombre = emp.PrimerNombre,
+                    Nombre = emp.FullName,
                     Assigned = BaseEmpleado.Contains(emp.ID)
                 });
             }
@@ -127,7 +164,7 @@ namespace sarobi1._1.Controllers
 
 
             if (TryUpdateModel(BaseToUpdate,"",
-               new string[] { "Nombre" }))
+               new string[] { "Nombre, Encargado, Telefono, Direccion, ID_Supervisor" }))
             {
                 try
                 {
@@ -143,6 +180,7 @@ namespace sarobi1._1.Controllers
                 }
             }
             PopulateAssignedEmpleadoData(BaseToUpdate);
+            ViewBag.ID_Supervisor = new SelectList(db.Empleados.Where(s => s.Puesto.Equals("Supervisor")), "Id", "FullName");
             return View(BaseToUpdate);
         }
 
@@ -177,8 +215,6 @@ namespace sarobi1._1.Controllers
                 }
             }
         }
-
-
 
         // GET: Bases/Delete/5
         public ActionResult Delete(int? id)

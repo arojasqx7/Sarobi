@@ -2,20 +2,33 @@
 
 @{
     ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
 
-<h2>Index</h2>
-
+<br />
 <p>
-    @Html.ActionLink("Create New", "Create")
+    <h2 style="display:inline;margin-right:30px;">Horas Reportadas</h2>
+    <div class="input-group" style="display:inline-block;margin-left:200px;margin-top:-30px;">
+        <button type="button" class="btn btn-default" onclick="location.href='@Url.Action("Create")'" style="margin-left:650px;margin-top:-60px;"><span class="glyphicon glyphicon-plus"></span> Crear</button>
+    </div>
+
 </p>
-<table class="table">
+
+<br /><br />
+<table class="table table-condensed table-hover">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.Horas)
+            Base
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Fecha)
+            Oficial
+        </th>
+
+        <th>
+            Horas Reportadas
+        </th>
+        <th>
+            Día
         </th>
         <th></th>
     </tr>
@@ -23,17 +36,28 @@
 @foreach (var item in Model) {
     <tr>
         <td>
+            @Html.DisplayFor(modelItem => item.Base.Nombre)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Empleado.FullName)
+        </td>
+        <td>
             @Html.DisplayFor(modelItem => item.Horas)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.Fecha)
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.ID }) |
-            @Html.ActionLink("Details", "Details", new { id=item.ID }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.ID })
+             @Html.ActionLink(" ", "Edit", new { id = item.ID }, new { @class = "glyphicon glyphicon-edit" }) |
+            @Html.ActionLink(" ", "Details", new { id = item.ID }, new { @class = "glyphicon glyphicon-list-alt" }) |
+            @Html.ActionLink(" ", "Delete", new { id = item.ID }, new { @class = "glyphicon glyphicon-trash"})
         </td>
     </tr>
 }
 
 </table>
+<br />
+Página @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) de @Model.PageCount
+
+@Html.PagedListPager(Model, page => Url.Action("Index",
+    new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))

@@ -1,0 +1,13 @@
+CREATE TRIGGER [Trigger]
+	ON [dbo].[Empleado_Base]
+	FOR DELETE, INSERT, UPDATE
+	AS
+	BEGIN
+		SET NOCOUNT ON
+		insert into EmpleadoBase1 (EmpleadoID,BaseID)
+		select EmpleadoID, BaseID
+		from [dbo].[Empleado_Base] e
+		where NOT EXISTS (SELECT eb1.EmpleadoID,eb1.BaseID
+				 	 FROM EmpleadoBase1 eb1
+				 	 WHERE eb1.BaseID = e.BaseID and eb1.EmpleadoID= e.EmpleadoID);
+	END
