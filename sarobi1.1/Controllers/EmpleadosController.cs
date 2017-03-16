@@ -87,12 +87,27 @@ namespace sarobi1._1.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ID,PrimerNombre,PrimerApellido,SegundoApellido,FechaNacimiento,Sexo,TipoIdentificacion,NumeroIdentificacion,Nacionalidad,Telefono1,Telefono2,Direccion,Puesto,TipoEmpleado,FechaContratacion,Recomendaciones,Foto,AntecedentesPenales")] Empleado empleado)
+        public ActionResult Create([Bind(Include = "ID,PrimerNombre,PrimerApellido,SegundoApellido,FechaNacimiento,Sexo,TipoIdentificacion,NumeroIdentificacion,Nacionalidad,Telefono1,Telefono2,Direccion,Puesto,TipoEmpleado,FechaContratacion,Recomendaciones,Foto,AntecedentesPenales")] Empleado empleado, HttpPostedFileBase file, HttpPostedFileBase file2)
         {
             if (ModelState.IsValid)
             {
-                db.Empleados.Add(empleado);
-                db.SaveChanges();
+                if (file != null || file2!=null)
+                {
+                    string ImageName = System.IO.Path.GetFileName(file.FileName);
+                    string physicalPath = Server.MapPath("~/Fotos/" + ImageName);
+                    string DocName = System.IO.Path.GetFileName(file2.FileName);
+                    string physicalPath2 = Server.MapPath("~/AntecedentesPenales/" + DocName);
+
+
+                    // save image in folder
+                    file.SaveAs(physicalPath);
+                    file2.SaveAs(physicalPath2);
+
+                    empleado.Foto = ImageName;
+                    empleado.AntecedentesPenales = DocName;
+                    db.Empleados.Add(empleado);
+                    db.SaveChanges();                 
+                }
                 return RedirectToAction("Index");
             }
 

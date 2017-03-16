@@ -18,7 +18,8 @@ namespace sarobi1._1.Controllers
         // GET: Trackings
         public ActionResult Index()
         {
-            return View(db.Trackings.ToList());
+            var track = (from t in db.Trackings select t).OrderBy(t => t.Base.Nombre).ThenBy(t => t.Fecha);
+            return View(track.ToList());
         }
 
         public JsonResult GetBases()
@@ -30,10 +31,8 @@ namespace sarobi1._1.Controllers
 
         public JsonResult GetEmpleados(int id_base)
         {
-
-            var empleados = from a in db.EmpleadosBases1 where a.BaseID == id_base select new { a.Empleado.ID,a.Empleado.PrimerNombre};
+            var empleados = from a in db.EmpleadosBases1 where a.BaseID == id_base select new { a.Empleado.ID, FullName2= a.Empleado.PrimerNombre + " " + a.Empleado.PrimerApellido + " " + a.Empleado.SegundoApellido};
             return Json(empleados.ToList(), JsonRequestBehavior.AllowGet);
-            Console.Write(empleados.Count());
         }
 
 

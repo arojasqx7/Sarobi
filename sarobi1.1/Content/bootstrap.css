@@ -5529,13 +5529,13 @@ a.list-group-item:focus {
 }
 
 .panel-info {
-  border-color: #bce8f1;
+  border-color: #f2f2f2;
 }
 
 .panel-info > .panel-heading {
-  color: #3a87ad;
-  background-color: #d9edf7;
-  border-color: #bce8f1;
+  color: #0059b3;
+  background-color: #fff;
+  border-color: #f2f2f2;
 }
 
 .panel-info > .panel-heading + .panel-collapse .panel-body {

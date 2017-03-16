@@ -1,22 +1,48 @@
-﻿@model IEnumerable<sarobi1._1.Models.Base>
-
+﻿@model PagedList.IPagedList<sarobi1._1.Models.Base>
+@using PagedList.Mvc;
 @{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
 
-<h2>Index</h2>
+@using (Html.BeginForm("Index", "Bases", FormMethod.Get))
+{
+    <br />
+    <p>
+        <h2 style="display:inline;margin-right:30px;">Bases</h2>
+        <div class="input-group" style="display:inline-block;margin-left:200px;margin-top:-30px;">
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-<table class="table">
+            @Html.TextBox("SearchString", ViewBag.CurrentFilter as string, new { @class = "form-control", placeholder = "Buscar.." })<span><button class="btn btn-primary" type="submit" style="display:inline;"><span class="glyphicon glyphicon-search"></span> </button></span>
+
+            <div class="btn-group" role="group" style="margin-left:700px;margin-top:-60px;">
+                <button type="button" class="btn btn-default" onclick="location.href='@Url.Action("Create")'"><span class="glyphicon glyphicon-plus"></span> Crear</button> 
+            </div>
+        </div>
+
+    </p>
+}
+
+<br /><br />
+
+<table class="table table-condensed table-hover">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.Nombre)
+            @Html.ActionLink("Base", "Index", new { sortOrder = ViewBag.NameSortParm, currentFilter = ViewBag.CurrentFilter })
         </th>
-        <th>Empleados</th>
-        <th>Opciones</th>
+
+        <th>
+            @Html.ActionLink("Oficiales Asignados", "Index", new { sortOrder = ViewBag.NameSortParm, currentFilter = ViewBag.CurrentFilter })
+        </th>
+        <th>
+            @Html.ActionLink("Contacto", "Index", new { sortOrder = ViewBag.NameSortParm, currentFilter = ViewBag.CurrentFilter })
+        </th>
+        <th>
+            @Html.ActionLink("Teléfono Contacto", "Index", new { sortOrder = ViewBag.NameSortParm, currentFilter = ViewBag.CurrentFilter })
+        </th>
+        <th>
+            @Html.ActionLink("Nombre Supervisor", "Index", new { sortOrder = ViewBag.NameSortParm, currentFilter = ViewBag.CurrentFilter })
+        </th>
+        <th></th>
     </tr>
 
 @foreach (var item in Model) {
@@ -28,20 +54,32 @@
             @{
                 foreach (var emp in item.Empleado)
                 {
-                     @emp.PrimerNombre <br />
+                     @emp.FullName <br />
                 }
             }
         </td>
-
-
+        <td>
+            @Html.DisplayFor(modelItem => item.Encargado)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Telefono)
+        </td>
 
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.ID }) |
-            @Html.ActionLink("Details", "Details", new { id=item.ID }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.ID }) |
-            @Html.ActionLink("Tracking", "Create", "Trackings", new { id = item.ID },null)
+           @Html.DisplayFor(modelItem => item.Supervisor.FullName)
+        </td>
+
+        <td>
+            @Html.ActionLink(" ", "Edit", new { id = item.ID }, new { @class = "glyphicon glyphicon-edit" }) |
+            @Html.ActionLink(" ", "Details", new { id = item.ID }, new { @class = "glyphicon glyphicon-list-alt" }) |
+            @Html.ActionLink(" ", "Delete", new { id = item.ID }, new { @class = "glyphicon glyphicon-trash" })
         </td>
     </tr>
 }
 
 </table>
+<br />
+Página @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) de @Model.PageCount
+
+@Html.PagedListPager(Model, page => Url.Action("Index",
+    new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))
