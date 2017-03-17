@@ -2,7 +2,7 @@
 
 @{
     ViewBag.Title = "Delete";
-    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    Layout = "~/Views/Shared/_Admin2Layout.cshtml";
 }
 
 <h2>Borrar Empleado</h2>
@@ -12,7 +12,7 @@
 
 <div>
     <hr />
-    <dl class="dl-horizontal">
+    <dl class="dl-horizontal" style="overflow: hidden;padding:0;margin:0">
         <dt>
             Nombre Completo:
         </dt>
@@ -114,9 +114,10 @@
     @using (Html.BeginForm()) {
         @Html.AntiForgeryToken()
 
-        <div class="form-actions no-color">
+        <br /><br />
+        <p>
             <button type="submit" class="btn btn-danger"> <span class="glyphicon glyphicon-trash"> </span> Borrar</button>  |
             @Html.ActionLink("Regresar", "Index")
-        </div>
+       </p>
     }
 </div>

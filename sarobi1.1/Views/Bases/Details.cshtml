@@ -1,27 +1,79 @@
 ﻿@model sarobi1._1.Models.Base
 
 @{
-    ViewBag.Title = "Details";
-    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    ViewBag.Title = "Detalle Base";
+    Layout = "~/Views/Shared/_Admin2Layout.cshtml";
 }
 
-<h2>Details</h2>
+<br />
+<h2>Detalle Base</h2>
 
 <div>
-    <h4>Base</h4>
+
     <hr />
-    <dl class="dl-horizontal">
+    <dl class="dl-horizontal" style="overflow: hidden;padding:0;margin:0">
         <dt>
-            @Html.DisplayNameFor(model => model.Nombre)
+            Base:
         </dt>
 
         <dd>
             @Html.DisplayFor(model => model.Nombre)
         </dd>
 
+        <dt>
+            Contacto:
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Encargado)
+        </dd>
+
+        <dt>
+            Teléfono Contacto:
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Telefono)
+        </dd>
+
+        <dt>
+            <br />
+            Oficiales Asignados:
+        </dt>
+
+        <dd>
+            <br />
+            @{
+                foreach (var emp in Model.Empleado)
+                {
+                   @emp.FullName <br />
+                }
+            }
+        </dd>
+
+        <dt>
+            <br />
+            Supervisor:
+        </dt>
+
+        <dd></dd>
+
+        @*
+        <dd>
+            <br />
+        @* @Html.DisplayFor(model => model.Supervisor.PrimerNombre)
+            @{
+                foreach (var sup in Model.Empleado)
+                {
+                    @sup.Supervisor.FullName <br />
+                }
+            }
+        </dd>
+        *@
     </dl>
 </div>
+<br />
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.ID }) |
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("Editar", "Edit", new { id = Model.ID}, new { @class = "btn btn-info" }) |
+    @Html.ActionLink("Regresar", "Index")
 </p>

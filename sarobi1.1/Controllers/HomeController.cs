@@ -8,7 +8,7 @@ namespace sarobi1._1.Controllers
 {
     public class HomeController : Controller
     {
-        [Authorize]
+
         public ActionResult Index()
         {
             return View();
@@ -16,15 +16,23 @@ namespace sarobi1._1.Controllers
 
         public ActionResult About()
         {
-            ViewBag.Message = "Your application description page.";
-
             return View();
         }
 
         public ActionResult Contact()
         {
-            ViewBag.Message = "Your contact page.";
+            return View();
+        }
 
+        [Authorize]
+        public ActionResult Admin()
+        {
+            return View();
+        }
+
+        [Authorize]
+        public ActionResult Dashboard()
+        {
             return View();
         }
     }

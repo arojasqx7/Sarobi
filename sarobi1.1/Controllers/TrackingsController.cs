@@ -8,6 +8,7 @@ using System.Web;
 using System.Web.Mvc;
 using sarobi1._1.DAL;
 using sarobi1._1.Models;
+using PagedList;
 
 namespace sarobi1._1.Controllers
 {
@@ -16,10 +17,27 @@ namespace sarobi1._1.Controllers
         private SarobiContext db = new SarobiContext();
 
         // GET: Trackings
-        public ActionResult Index()
+
+        public ViewResult Index(string sortOrder, string currentFilter, string searchString, int? page)
         {
+            ViewBag.CurrentSort = sortOrder;
+            ViewBag.NameSortParm = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
+
+            if (searchString != null)
+            {
+                page = 1;
+            }
+            else
+            {
+                searchString = currentFilter;
+            }
+
+            ViewBag.CurrentFilter = searchString;
+
+            int pageSize = 10;
+            int pageNumber = (page ?? 1);
             var track = (from t in db.Trackings select t).OrderBy(t => t.Base.Nombre).ThenBy(t => t.Fecha);
-            return View(track.ToList());
+            return View(track.ToPagedList(pageNumber, pageSize));
         }
 
         public JsonResult GetBases()

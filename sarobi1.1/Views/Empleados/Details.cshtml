@@ -2,7 +2,7 @@
 
 @{
     ViewBag.Title = "Details";
-    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    Layout = "~/Views/Shared/_Admin2Layout.cshtml";
 }
 
 <h2>Detalle Empleado</h2>
@@ -118,6 +118,6 @@
 <br />
 
 <p>
-    @Html.ActionLink("Editar", "Edit", new { id = Model.ID }) |
+    @Html.ActionLink("Editar", "Edit", new { id = Model.ID }, new { @class = "btn btn-info" }) |
     @Html.ActionLink("Regresar", "Index")
 </p>

@@ -2,21 +2,18 @@
 @using PagedList.Mvc;
 @{
     ViewBag.Title = "Index";
-    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    Layout = "~/Views/Shared/_Admin2Layout.cshtml";
 }
 
 @using (Html.BeginForm("Index", "Bases", FormMethod.Get))
 {
     <br />
     <p>
-        <h2 style="display:inline;margin-right:30px;">Bases</h2>
+        <h2 style="display:inline;margin-right:30px;"> Bases</h2>
         <div class="input-group" style="display:inline-block;margin-left:200px;margin-top:-30px;">
 
-            @Html.TextBox("SearchString", ViewBag.CurrentFilter as string, new { @class = "form-control", placeholder = "Buscar.." })<span><button class="btn btn-primary" type="submit" style="display:inline;"><span class="glyphicon glyphicon-search"></span> </button></span>
-
-            <div class="btn-group" role="group" style="margin-left:700px;margin-top:-60px;">
-                <button type="button" class="btn btn-default" onclick="location.href='@Url.Action("Create")'"><span class="glyphicon glyphicon-plus"></span> Crear</button> 
-            </div>
+            @Html.TextBox("SearchString", ViewBag.CurrentFilter as string, new { @class = "col-md-4", placeholder = "Buscar.." })<span><button class="" type="submit" style="display:inline; margin-left:5px;height:33px;background-color:#428bca;"><span class="glyphicon glyphicon-search"></span> </button></span>
+            <button type="button" class="btn btn-success" onclick="location.href='@Url.Action("Create")'" style="margin-left:650px;margin-top:-60px;"><span class="glyphicon glyphicon-plus"></span> Crear</button>
         </div>
 
     </p>

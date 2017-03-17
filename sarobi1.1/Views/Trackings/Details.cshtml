@@ -1,18 +1,32 @@
 ﻿@model sarobi1._1.Models.Tracking
 
 @{
-    ViewBag.Title = "Details";
-    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    ViewBag.Title = "Detalle Tracking";
+    Layout = "~/Views/Shared/_Admin2Layout.cshtml";
 }
 
-<h2>Details</h2>
+<h2>Detalle Tracking</h2>
 
 <div>
-    <h4>Tracking</h4>
+
     <hr />
-    <dl class="dl-horizontal">
+    <dl class="dl-horizontal" style="overflow: hidden;padding:0;margin:0">
         <dt>
-            @Html.DisplayNameFor(model => model.Horas)
+            Base:
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Base.Nombre)
+        </dd>
+        <dt>
+            Empleados:
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Empleado.FullName)
+        </dd>
+        <dt>
+           Horas:
         </dt>
 
         <dd>
@@ -20,7 +34,7 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.Fecha)
+            Fecha:
         </dt>
 
         <dd>
@@ -30,6 +44,6 @@
     </dl>
 </div>
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.ID }) |
-    @Html.ActionLink("Back to List", "Index")
+ @*   @Html.ActionLink("Edit", "Edit", new { id = Model.ID }) |  *@
+    @Html.ActionLink("Regresar", "Index")
 </p>

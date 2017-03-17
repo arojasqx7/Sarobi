@@ -1,0 +1,116 @@
+﻿
+@{
+    ViewBag.Title = "Admin";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>@ViewBag.Title - Sarobi</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta charset="utf-8" />
+    <meta name="description" content="overview &amp; stats" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/Content/font-awesome.min.css" rel="stylesheet" />
+    <link href="~/Content/fonts.googleapis.com.css" rel="stylesheet" />
+    <link href="~/Content/ace.min.css" rel="stylesheet" />
+    <link href="~/Content/ace-skins.min.css" rel="stylesheet" />
+    <link href="~/Content/ace-rtl.min.css" rel="stylesheet" />
+    @Scripts.Render("~/bundles/modernizr")
+</head>
+
+<body class="no-skin">
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                @Html.ActionLink("Sarobi", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+            </div>
+            <div class="navbar-collapse collapse">
+                @Html.Partial("_LoginPartial")
+            </div>
+        </div>
+    </div>
+
+
+
+    <div class="main-container ace-save-state" id="main-container">
+
+
+        <div id="sidebar" class="sidebar                 responsive                    ace-save-state">
+
+
+            <ul class="nav nav-list" style="text-align:center;">
+
+              <li style="display:inline-flex;">
+                  <a>
+                <i class="menu-icon fa fa-tachometer"></i><span>@Html.ActionLink("Dashboard", "Dashboard", "Home")</span>
+                  </a>
+              </li>
+
+                @if (User.IsInRole("Administrator"))
+                {
+                    <li style="display:inline-flex;">
+                        <a>
+                            <i class="menu-icon fa fa-cog fa-fw"></i><span>@Html.ActionLink("Administración", "Index", "Admin")</span>
+                        </a>
+                    </li>
+                }
+
+                <li style="display:inline-flex;">
+                    <a>
+                        <i class="menu-icon fa fa-users"></i><span> @Html.ActionLink("Empleados", "Index", "Empleados")</span>
+                    </a>
+                </li>
+
+                <li style="display:inline-flex;">
+                    <a>
+                        <i class="menu-icon fa fa-building-o"></i><span> @Html.ActionLink("Bases", "Index", "Bases")</span>
+                    </a>
+                </li>
+
+                <li style="display:inline-flex;">
+                    <a>
+                        <i class="menu-icon fa fa-clock-o"></i><span>@Html.ActionLink("Tracking", "Create", "Trackings")</span>
+                    </a>
+                </li>
+
+            </ul><!-- /.nav-list -->
+
+        </div>
+
+
+
+        <div class="main-content">
+
+            <div class="container body-content">
+
+
+
+                <div class="page-content">
+                    @RenderBody()
+
+                </div><!-- /.page-content -->
+            </div>
+
+
+        </div>
+
+        
+            <hr />
+            <footer style="text-align:center;">
+                <p>&copy; @DateTime.Now.Year - Sarobi</p>
+            </footer>
+    </div>
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+
+</body>
+</html>
+
