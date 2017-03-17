@@ -2,7 +2,7 @@
 
 @{
     ViewBag.Title = "Crear Tracking";
-    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    Layout = "~/Views/Shared/_Admin2Layout.cshtml";
 }
 
 <h2><span class="glyphicon glyphicon-time"></span>       Añadir Horas</h2>
@@ -15,48 +15,49 @@
 
                  <div class="form-group">
                  @Html.LabelFor(model => model.Base.Nombre, "Base:", htmlAttributes: new { @class = "control-label col-md-2" })
-                     <div class="col-md-10">
+                     <div class="col-md-6">
                          @Html.DropDownListFor(x => x.ID_Base, new SelectList(string.Empty, "Value", "Text"), "-- Seleccione una base --", new { @class = "form-control", @id = "DropdownBase" })
                          @*@Html.DropDownList("ID_Base", null, "-- Seleccione una Base --", htmlAttributes: new { @class = "form-control col-md-12", @id="DropdownBase" })*@
                             @Html.ValidationMessageFor(model => model.Base.Nombre, "", new { @class = "text-danger" })
                     </div>
                     </div>
 
-                 <div class="form-group">
+                 <div class="form-group" style="margin-top:-55px;">
                     @Html.LabelFor(model => model.Empleado.PrimerNombre, "Empleado:", htmlAttributes: new { @class = "control-label col-md-2" })
-                       <div class="col-md-10">
-                        @Html.DropDownListFor(x => x.ID_Empleado, new SelectList(string.Empty, "Value", "Text"), "-- Seleccione un empleado --", new { @class = "form-control", @id = "DropdownEmpleado" })
-                        @*@Html.DropDownList("ID_Empleado", null, "-- Seleccione un empleado --", htmlAttributes: new { @class = "form-control col-md-12", @id = "DropdownEmpleado" })*@
+                     <div class="col-md-6">
+                         @Html.DropDownListFor(x => x.ID_Empleado, new SelectList(string.Empty, "Value", "Text"), "-- Seleccione un empleado --", new { @class = "form-control", @id = "DropdownEmpleado" })
+                         @*@Html.DropDownList("ID_Empleado", null, "-- Seleccione un empleado --", htmlAttributes: new { @class = "form-control col-md-12", @id = "DropdownEmpleado" })*@
                          @Html.ValidationMessageFor(model => model.Empleado.PrimerNombre, "", new { @class = "text-danger" })
-                  </div>
+                     </div>
                  </div>
 
                     <div class="form-group">
-                        @Html.LabelFor(model => model.Horas, htmlAttributes: new { @class = "control-label col-md-2" })
-                        <div class="col-md-10">
+                        @Html.LabelFor(model => model.Horas, "Horas:",htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-6">
                             @Html.EditorFor(model => model.Horas, new { htmlAttributes = new { @class = "form-control" } })
                             @Html.ValidationMessageFor(model => model.Horas, "", new { @class = "text-danger" })
                         </div>
                     </div>
 
                     <div class="form-group">
-                        @Html.LabelFor(model => model.Fecha, htmlAttributes: new { @class = "control-label col-md-2" })
-                        <div class="col-md-10">
+                        @Html.LabelFor(model => model.Fecha, "Fecha:", htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-6">
                             @Html.EditorFor(model => model.Fecha, new { htmlAttributes = new { @class = "form-control datetimepicker" } })
                             @Html.ValidationMessageFor(model => model.Fecha, "", new { @class = "text-danger" })
                         </div>
                     </div>
 
+                <br />
                     <div class="form-group">
                         <div class="col-md-offset-2 col-md-10">
-                            <input type="submit" value="Create" class="btn btn-default" />
+                            <input type="submit" value="Crear" class="btn btn-primary" />
                         </div>
                     </div>
                 </div>
             }
 
             <div>
-                @Html.ActionLink("Back to List", "Index")
+                @Html.ActionLink("Regresar", "Index")
             </div>
 
             @section Scripts {

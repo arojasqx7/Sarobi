@@ -82,15 +82,15 @@ namespace sarobi1._1.Controllers
             switch (result)
             {
                 case SignInStatus.Success:
-
-                    return RedirectToLocal(returnUrl);
+                    string url = "/Home/Dashboard";
+                    return RedirectToLocal(url);
                 case SignInStatus.LockedOut:
                     return View("Lockout");
                 case SignInStatus.RequiresVerification:
                     return RedirectToAction("SendCode", new { ReturnUrl = returnUrl, RememberMe = model.RememberMe });
                 case SignInStatus.Failure:
                 default:
-                    ModelState.AddModelError("", "Invalid login attempt.");
+                    ModelState.AddModelError("", "Email o Contraseña Incorrecto.");
                     return View(model);
             }
         }

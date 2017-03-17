@@ -132,7 +132,7 @@ namespace sarobi1._1.Controllers
         // POST: Empleados/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ID, PrimerNombre, PrimerApellido, SegundoApellido, FechaNacimiento, Sexo, TipoIdentificacion, NumeroIdentificacion, Nacionalidad, Telefono1, Telefono2, Direccion, Puesto, TipoEmpleado, FechaContratacion, Recomendaciones, Foto, AntecedentesPenales")] Empleado empleado)
+        public ActionResult Edit([Bind(Include = "ID, PrimerNombre, PrimerApellido, SegundoApellido, FechaNacimiento, Sexo, TipoIdentificacion, NumeroIdentificacion, Nacionalidad, Telefono1, Telefono2, Direccion, Puesto, TipoEmpleado, FechaContratacion, Recomendaciones")] Empleado empleado)
         {
             if (ModelState.IsValid)
             {

@@ -2,11 +2,11 @@
 
 @{
     ViewBag.Title = "Crear Base";
-    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    Layout = "~/Views/Shared/_Admin2Layout.cshtml";
 }
 
-<h2>Crear Base</h2>
-
+<h2><i class="menu-icon fa fa-building-o"></i>      Crear Base</h2>
+<link href="~/Content/bootstrap-datetimepicker.css" rel="stylesheet" />
 
 @using (Html.BeginForm()) 
 {
@@ -19,7 +19,7 @@
         <div class="col-md-6">
             <div class="form-group">
                 @Html.LabelFor(model => model.Nombre, "Nombre:", htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
+                <div class="col-md-6">
                     @Html.EditorFor(model => model.Nombre, new { htmlAttributes = new { @class = "form-control" } })
                     @Html.ValidationMessageFor(model => model.Nombre, "", new { @class = "text-danger" })
                 </div>
@@ -27,7 +27,7 @@
 
             <div class="form-group">
                 @Html.LabelFor(model => model.Encargado, "Encargado:", htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
+                <div class="col-md-6">
                     @Html.EditorFor(model => model.Encargado, new { htmlAttributes = new { @class = "form-control" } })
                     @Html.ValidationMessageFor(model => model.Encargado, "", new { @class = "text-danger" })
                 </div>
@@ -35,8 +35,8 @@
 
             <div class="form-group">
                 @Html.LabelFor(model => model.Telefono, "Teléfono:", htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.Telefono, new { htmlAttributes = new { @class = "form-control" } })
+                <div class="col-md-6">
+                    @Html.EditorFor(model => model.Telefono, new { htmlAttributes = new { @class = "form-control", @id = "txtTel1" } })
                     @Html.ValidationMessageFor(model => model.Telefono, "", new { @class = "text-danger" })
                 </div>
             </div>
@@ -46,7 +46,7 @@
         <div class="col-md-6">
             <div class="form-group">
                 @Html.LabelFor(model => model.Direccion, "Dirección:", htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
+                <div class="col-md-6">
                     @Html.EditorFor(model => model.Direccion, new { htmlAttributes = new { @class = "form-control" } })
                     @Html.ValidationMessageFor(model => model.Direccion, "", new { @class = "text-danger" })
                 </div>
@@ -54,7 +54,7 @@
 
             <div class="form-group">
                 @Html.LabelFor(model => model.ID_Supervisor, "Supervisor:", htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
+                <div class="col-md-6">
                     @Html.DropDownList("ID_Supervisor", null, "-- Seleccione supervisor --", htmlAttributes: new { @class = "form-control col-md-12" })
                     @Html.ValidationMessageFor(model => model.ID_Supervisor, "", new { @class = "text-danger" })
                 </div>
@@ -115,4 +115,11 @@
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
+<script src="~/Scripts/moment.js"></script>
+<script src="~/Scripts/moment-with-locales.js"></script>
+<script src="~/Scripts/bootstrap-datetimepicker.min.js"></script>
+<script src="~/Scripts/jquery.maskedinput.js"></script>
+    <script>
+        $('#txtTel1').mask('9999-9999');
+    </script>
 }

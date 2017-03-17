@@ -1,33 +1,88 @@
 ﻿@model sarobi1._1.Models.Base
 
 @{
-    ViewBag.Title = "Delete";
-    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    ViewBag.Title = "Borrar Base";
+    Layout = "~/Views/Shared/_Admin2Layout.cshtml";
 }
 
-<h2>Delete</h2>
+<h2>Borrar Base</h2>
 
-<h3>Are you sure you want to delete this?</h3>
+<h4>Estás seguro deseas borrar esta base?</h4>
+<br />
+
 <div>
-    <h4>Base</h4>
+
     <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Nombre)
-        </dt>
+<dl class="dl-horizontal" style="overflow: hidden;padding:0;margin:0">
+    <dt>
+        Base:
+    </dt>
 
+    <dd>
+        @Html.DisplayFor(model => model.Nombre)
+    </dd>
+
+    <dt>
+        Contacto:
+    </dt>
+
+    <dd>
+        @Html.DisplayFor(model => model.Encargado)
+    </dd>
+
+    <dt>
+        Teléfono Contacto:
+    </dt>
+
+    <dd>
+        @Html.DisplayFor(model => model.Telefono)
+    </dd>
+
+    <dt>
+        <br />
+        Oficiales Asignados:
+    </dt>
+
+    <dd>
+        <br />
+        @{
+            foreach (var emp in Model.Empleado)
+            {
+                @emp.FullName <br />
+            }
+        }
+    </dd>
+
+    <dt>
+        <br />
+        Supervisor:
+    </dt>
+
+    <dd></dd>
+
+    @*
         <dd>
-            @Html.DisplayFor(model => model.Nombre)
+            <br />
+        @* @Html.DisplayFor(model => model.Supervisor.PrimerNombre)
+            @{
+                foreach (var sup in Model.Empleado)
+                {
+                    @sup.Supervisor.FullName <br />
+                }
+            }
         </dd>
+    *@
+</dl>
 
-    </dl>
+
 
     @using (Html.BeginForm()) {
         @Html.AntiForgeryToken()
 
-        <div class="form-actions no-color">
-            <input type="submit" value="Delete" class="btn btn-default" /> |
-            @Html.ActionLink("Back to List", "Index")
-        </div>
+        <br /><br />
+        <p>
+            <button type="submit" class="btn btn-danger"> <span class="glyphicon glyphicon-trash"> </span> Borrar</button>  |
+            @Html.ActionLink("Regresar", "Index")
+        </p>
     }
 </div>

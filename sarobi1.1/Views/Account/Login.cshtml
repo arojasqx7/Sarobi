@@ -14,13 +14,13 @@
                 @Html.AntiForgeryToken()
 
                 <hr />
-                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
                 <div class="panel panel-info">
                     <div class="panel-heading">
                         <div class="panel-title" style="text-align:center;">Inicio de Sesión</div>
                     </div>
 
-                    <div class="panel-body" style="margin-left:30px;">
+                    <div class="panel-body" style="margin-left:12px;">
 
                         @*<h2 style="text-align:center;"><img src="~/Content/logo/sarobi.png" /></h2>*@
                         <br />
@@ -45,9 +45,11 @@
                         <br />
                         <div class="form-group">
                             <div class="col-md-offset-2 col-md-10">
-                                <button type="submit" class="btn btn-primary" style="width:250px;margin-left:-55px;"> <span class="glyphicon glyphicon-log-in"> </span> Log In</button>
+                                <button type="submit" class="btn btn-primary" style="width:260px;margin-left:-55px;"> <span class="glyphicon glyphicon-log-in"> </span> Log In</button>
                             </div>
                         </div>
+                        <br />
+                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
                     </div>
                 </div>
 

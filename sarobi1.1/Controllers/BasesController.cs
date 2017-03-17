@@ -68,6 +68,7 @@ namespace sarobi1._1.Controllers
             {
                 return HttpNotFound();
             }
+
             return View(@base);
         }
 
@@ -78,7 +79,7 @@ namespace sarobi1._1.Controllers
             basee.Empleado = new List<Empleado>();
 
             PopulateAssignedEmpleadoData(basee);
-            ViewBag.ID_Supervisor = new SelectList(db.Empleados.Where(s => s.Puesto.Equals("Supervisor")), "Id", "FullName");
+            ViewBag.ID_Supervisor = new SelectList(db.Empleados.Where(s => s.Puesto.Equals("Supervisor")).OrderBy(s=>s.PrimerNombre), "Id", "FullName");
             return View();
         }
 
@@ -104,7 +105,7 @@ namespace sarobi1._1.Controllers
                 return RedirectToAction("Index");
             }
             PopulateAssignedEmpleadoData(basee);
-            ViewBag.ID_Supervisor = new SelectList(db.Empleados.Where(s => s.Puesto.Equals("Supervisor")), "Id", "FullName");
+            ViewBag.ID_Supervisor = new SelectList(db.Empleados.Where(s => s.Puesto.Equals("Supervisor")).OrderBy(s => s.PrimerNombre), "Id", "FullName");
             return View(basee);
         }
 
@@ -127,13 +128,13 @@ namespace sarobi1._1.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.ID_Supervisor = new SelectList(db.Empleados.Where(s => s.Puesto.Equals("Supervisor")), "Id", "FullName");
+            ViewBag.ID_Supervisor = new SelectList(db.Empleados.Where(s => s.Puesto.Equals("Supervisor")).OrderBy(s=>s.PrimerNombre), "Id", "FullName");
             return View(basee);
         }
 
         private void PopulateAssignedEmpleadoData(Base basee)
         {
-            var allEmpleados = db.Empleados;
+            var allEmpleados = db.Empleados.Where(c => c.Puesto.Equals("Oficial")).OrderBy(c=>c.PrimerNombre);
             var BaseEmpleado = new HashSet<int>(basee.Empleado.Select(c => c.ID));
             var viewModel = new List<AssignedEmpleadoData>();
             foreach (var emp in allEmpleados)
