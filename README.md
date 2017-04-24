@@ -1,0 +1,1 @@
+SAROBI INTERNACIONAL es una empresa que tiene más de 10 años de ofrecer en el mercado nacional servicios de seguridad privada para varios sectores, con especialidad en Condominios Residenciales y Centros Comerciales.
