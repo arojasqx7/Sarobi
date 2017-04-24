@@ -161,14 +161,14 @@ namespace sarobi1._1.Controllers
                 {
                     ViewBag.Roles = GetAllRolesAsSelectList();
                     ModelState.AddModelError(string.Empty,
-                        "Error: Failed to create the user. Check password requirements.");
+                        "Error: Falla al crear usuario. Verifica los requerimientos de la contraseña.");
                     return View(paramExpandedUserDTO);
                 }
             }
             catch (Exception ex)
             {
                 ViewBag.Roles = GetAllRolesAsSelectList();
-                ModelState.AddModelError(string.Empty, "Error: " + ex);
+               // ModelState.AddModelError(string.Empty, "Error: " + ex);
                 return View("Create");
             }
         }
@@ -217,7 +217,7 @@ namespace sarobi1._1.Controllers
             }
             catch (Exception ex)
             {
-                ModelState.AddModelError(string.Empty, "Error: " + ex);
+              //  ModelState.AddModelError(string.Empty, "Error: " + ex);
                 return View("EditUser", GetUser(paramExpandedUserDTO.UserName));
             }
         }

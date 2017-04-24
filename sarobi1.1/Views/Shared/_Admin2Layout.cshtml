@@ -47,7 +47,7 @@
 
             <ul class="nav nav-list" style="text-align:center;">
 
-              <li style="display:inline-flex;">
+              <li>
                   <a>
                 <i class="menu-icon fa fa-tachometer"></i><span>@Html.ActionLink("Dashboard", "Dashboard", "Home")</span>
                   </a>
@@ -55,26 +55,27 @@
 
                 @if (User.IsInRole("Administrator"))
                 {
-                    <li style="display:inline-flex;">
+                    <li>
                         <a>
                             <i class="menu-icon fa fa-cog fa-fw"></i><span>@Html.ActionLink("Administración", "Index", "Admin")</span>
                         </a>
                     </li>
-                }
 
-                <li style="display:inline-flex;">
+                <li>
                     <a>
                         <i class="menu-icon fa fa-users"></i><span> @Html.ActionLink("Empleados", "Index", "Empleados")</span>
                     </a>
                 </li>
 
-                <li style="display:inline-flex;">
+                }
+
+                <li>
                     <a>
                         <i class="menu-icon fa fa-building-o"></i><span> @Html.ActionLink("Bases", "Index", "Bases")</span>
                     </a>
                 </li>
 
-                <li style="display:inline-flex;">
+                <li>
                     <a>
                         <i class="menu-icon fa fa-clock-o"></i><span>@Html.ActionLink("Tracking", "Create", "Trackings")</span>
                     </a>

@@ -234,6 +234,14 @@
     <Compile Include="Migrations\201703152057171_initial4.1-BaseData.Designer.cs">
       <DependentUpon>201703152057171_initial4.1-BaseData.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201704211919114_Initial5.cs" />
+    <Compile Include="Migrations\201704211919114_Initial5.Designer.cs">
+      <DependentUpon>201704211919114_Initial5.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201704212147134_Initial5.1.cs" />
+    <Compile Include="Migrations\201704212147134_Initial5.1.Designer.cs">
+      <DependentUpon>201704212147134_Initial5.1.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\AssignedEmpleadoData.cs" />
@@ -258,6 +266,10 @@
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\font-awesome.min.css" />
     <Content Include="Content\fonts.googleapis.com.css" />
+    <Content Include="Content\logo\sarobi.ico" />
+    <Content Include="Content\logo\sarobi.png" />
+    <Content Include="Content\logo\slider1.jpg" />
+    <Content Include="Content\logo\slider2.jpg" />
     <Content Include="Content\PagedList.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\fontawesome-webfont.svg" />
@@ -376,6 +388,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201703152057171_initial4.1-BaseData.resx">
       <DependentUpon>201703152057171_initial4.1-BaseData.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201704211919114_Initial5.resx">
+      <DependentUpon>201704211919114_Initial5.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201704212147134_Initial5.1.resx">
+      <DependentUpon>201704212147134_Initial5.1.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

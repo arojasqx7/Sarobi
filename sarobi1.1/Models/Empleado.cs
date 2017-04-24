@@ -59,6 +59,13 @@ namespace sarobi1._1.Models
 
         public string AntecedentesPenales { get; set; }
 
+        [DataType(DataType.EmailAddress, ErrorMessage ="Debe tener formato de correo")]
+        public string Username { get; set; }
+
+        [StringLength(100, ErrorMessage = "El {0} debe tener al menos {2} caracteres.", MinimumLength = 6)]
+        [DataType(DataType.Password)]
+        public string Contrasena { get; set; }
+
         public string FullName
         {
             get

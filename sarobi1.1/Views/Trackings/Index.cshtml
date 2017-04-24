@@ -1,18 +1,55 @@
 ﻿@model PagedList.IPagedList<sarobi1._1.Models.Tracking>
+@*@model sarobi1._1.Models.Tracking*@
 @using PagedList.Mvc;
 @{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Admin2Layout.cshtml";
 }
+<link href="~/Content/bootstrap-datetimepicker.css" rel="stylesheet"/>
 
-<br />
-<p>
+
+@using (Html.BeginForm("Index", "Trackings", FormMethod.Get)) {
+    
+    <br />
+    <p>
     <h2 style="display:inline;margin-right:30px;">Horas Reportadas</h2>
-    <div class="input-group" style="display:inline-block;margin-left:200px;margin-top:-30px;">
-        <button type="button" class="btn btn-success" onclick="location.href='@Url.Action("Create")'" style="margin-left:650px;margin-top:-60px;"><span class="glyphicon glyphicon-plus"></span> Crear</button>
+   
+    
+        <div class="form-group">
+            <br />
+            <label class="control-label col-md-2">Filtrar por:</label>
+            <div class="col-md-2">
+                @Html.DropDownList("Filtros", new List<SelectListItem>
+                    {
+                        new SelectListItem() {Text = "Base", Value="1"},
+                        new SelectListItem() {Text = "Fecha", Value="2"}
+                     }, "--Seleccione--", new { @class = "form-control", @id="SelectTipo" })    
+            </div>
+        </div>
+
+
+            <div class="form-group" id="filterBase" style="display:none;">
+                <br />
+                <label class="control-label col-md-2"></label>
+                <div class="col-md-4" style="display:inline-flex;">
+                    @Html.DropDownList("SearchString", new SelectList(string.Empty, "Text"),new { @class = "form-control", @id = "DropdownBase" ,@onchange = "this.form.submit();" }) @*<span><button class="" type="submit" style="display:inline; margin-left:20px;height:33px;background-color:#428bca;"><span class="glyphicon glyphicon-search"></span> </button></span>*@
+                </div>
+            </div>
+
+
+
+    <div class="form-group" id="filterFechas" style="display:none;">
+       <br />
+        <label class="control-label col-md-2"></label>
+        <div class="col-md-4" style="display:inline-flex;">
+          @*  @Html.TextBox("SearchString2",ViewBag.CurrentFilter as string, new { @class = "form-control datetimepicker",@placeholder="Desde" }) @Html.TextBox("SearchString3", ViewBag.CurrentFilter as string, new { @class = "form-control datetimepicker", @placeholder = "Hasta" }) <span><button class="" type="submit" style="display:inline; margin-left:20px;height:33px;background-color:#428bca;"><span class="glyphicon glyphicon-search"></span> </button></span>*@
+        </div>
     </div>
 
+
+    <br />
 </p>
+}
 
 <br /><br />
 <table class="table table-condensed table-hover">
@@ -61,3 +98,53 @@ Página @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) de @Model.P
 
 @Html.PagedListPager(Model, page => Url.Action("Index",
     new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))
+
+
+@section Scripts{
+<script src="~/Scripts/jquery-2.2.4.min.js"></script>
+<script src="~/Scripts/moment.js"></script>
+<script src="~/Scripts/moment-with-locales.js"></script>
+<script src="~/Scripts/bootstrap-datetimepicker.min.js"></script>
+<script>
+
+    $('.datetimepicker').datetimepicker({
+        format: "DD/MM/YYYY",
+        locale: 'es',
+        widgetPositioning: {
+            horizontal: 'auto',
+            vertical: 'bottom'
+        }
+    });
+
+    $(function () {
+        $.ajax({
+            type: "GET",
+            url: "/Trackings/GetBases2",
+            datatype: "Json",
+            success: function (data) {
+                $.each(data, function (index, value) {
+                    $('#DropdownBase').append('<option>' + value.Nombre + '</option>');
+                });
+            }
+        });
+    });
+
+
+    $("#SelectTipo").change(function () {
+
+
+        $("#filterBase").css('display', (this.value == '1') ? 'block' : 'none');
+        $("#filterFechas").css('display', (this.value == '2') ? 'block' : 'none');
+
+        //if ($(this).val() == "Base") {
+        //    $('#filterBase').css("display", "block");
+        //    $('#filterFechas').css("display", "none");
+        //}
+        //else {
+        //    $('#filterFechas').css("display", "block");
+        //    $('#filterBase').css("display", "none");
+        //}
+    });
+
+</script>
+}
