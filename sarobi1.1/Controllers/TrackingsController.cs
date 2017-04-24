@@ -9,6 +9,7 @@ using System.Web.Mvc;
 using sarobi1._1.DAL;
 using sarobi1._1.Models;
 using PagedList;
+using Microsoft.AspNet.Identity;
 
 namespace sarobi1._1.Controllers
 {
@@ -18,7 +19,7 @@ namespace sarobi1._1.Controllers
 
         // GET: Trackings
 
-        public ViewResult Index(string sortOrder, string currentFilter, string searchString, int? page)
+        public ViewResult Index(string sortOrder, string currentFilter, string searchString, int? page, string Filtros)
         {
             ViewBag.CurrentSort = sortOrder;
             ViewBag.NameSortParm = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
@@ -29,31 +30,48 @@ namespace sarobi1._1.Controllers
             }
             else
             {
-                searchString = currentFilter;
+                Filtros = currentFilter;
             }
 
-            ViewBag.CurrentFilter = searchString;
+            ViewBag.CurrentFilter = Filtros;
+
+            var tracks = from s in db.Trackings
+                            select s;
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                tracks = tracks.Where(s => s.Base.Nombre.Equals(searchString));
+            }
 
             int pageSize = 10;
             int pageNumber = (page ?? 1);
-            var track = (from t in db.Trackings select t).OrderBy(t => t.Base.Nombre).ThenBy(t => t.Fecha);
-            return View(track.ToPagedList(pageNumber, pageSize));
+            //var track = (from t in db.Trackings select t).OrderBy(t => t.Base.Nombre).ThenBy(t => t.Fecha);
+            //return View(track.ToPagedList(pageNumber, pageSize));
+            return View(tracks.OrderBy(t => t.Base.Nombre).ThenBy(t => t.Fecha).ToPagedList(pageNumber, pageSize));
         }
 
         public JsonResult GetBases()
         {
-            var bases = from b in db.Bases select new { b.ID, b.Nombre };
-            return Json(bases.ToList(), JsonRequestBehavior.AllowGet);
-        }
+            var user = User.Identity.GetUserName();
+            if (user == "andrey.rojas.quiros@gmail.com")
+            {
+                var basesFilter1 = from i in db.Bases
+                                   orderby (i.Nombre)
+                                   select new { i.ID, i.Nombre };
+                return Json(basesFilter1.ToList(), JsonRequestBehavior.AllowGet);
+            }
 
+            else {    
+            var IdSup = db.Empleados.Where(i => i.Username == user).Select(i => i.ID).First();
+            var basesFilter2 = db.Bases.Where(s => s.ID_Supervisor == IdSup).Select(i => new { i.ID, i.Nombre }).OrderBy(i=>i.Nombre);
+            return Json(basesFilter2.ToList(), JsonRequestBehavior.AllowGet);
+            }
+        }
 
         public JsonResult GetEmpleados(int id_base)
         {
-            var empleados = from a in db.EmpleadosBases1 where a.BaseID == id_base select new { a.Empleado.ID, FullName2= a.Empleado.PrimerNombre + " " + a.Empleado.PrimerApellido + " " + a.Empleado.SegundoApellido};
+            var empleados = from a in db.EmpleadosBases1 where a.BaseID == id_base orderby (a.Empleado.PrimerNombre) select new { a.Empleado.ID, FullName2= a.Empleado.PrimerNombre + " " + a.Empleado.PrimerApellido + " " + a.Empleado.SegundoApellido};
             return Json(empleados.ToList(), JsonRequestBehavior.AllowGet);
         }
-
-
 
         // GET: Trackings/Details/5
         public ActionResult Details(int? id)
@@ -73,6 +91,8 @@ namespace sarobi1._1.Controllers
         // GET: Trackings/Create
         public ActionResult Create()
         {
+
+
             ViewBag.ID_Base= new SelectList(db.Bases, "Id", "Nombre");
             ViewBag.ID_Empleado = new SelectList(db.Empleados, "Id", "PrimerNombre");
             return View();

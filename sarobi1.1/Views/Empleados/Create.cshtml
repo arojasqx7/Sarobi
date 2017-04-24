@@ -1,5 +1,6 @@
 ﻿@model sarobi1._1.Models.Empleado
 
+
 @{
     ViewBag.Title = "Crear Empleado";
     Layout = "~/Views/Shared/_Admin2Layout.cshtml";
@@ -131,7 +132,7 @@
                         new SelectListItem() {Text = "Administrativo", Value="Administrativo"},
                         new SelectListItem() {Text = "Supervisor", Value="Supervisor"},
                         new SelectListItem() {Text = "Oficial", Value="Oficial" }
-                     }, " -- Seleccione Puesto --", new { @class = "form-control" })
+                     }, " -- Seleccione Puesto --", new { @class = "form-control",@id="TipoPuesto"})
                     @Html.ValidationMessageFor(model => model.Puesto, "", new { @class = "text-danger" })
                 </div>
             </div>
@@ -180,6 +181,27 @@
                     @Html.ValidationMessageFor(model => model.AntecedentesPenales, "", new { @class = "text-danger" })
                 </div>
             </div>
+
+            <br />
+
+            <h5 id="Titulo" style="display:none;"><strong>Credenciales de Acceso</strong></h5>
+
+            <div class="form-group" id="divUsername" style="display:none;">
+                @Html.LabelFor(model => model.Username, "Username:", htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-6" style="margin-left:40px;">
+                    @Html.EditorFor(model => model.Username, new { htmlAttributes = new { @class = "form-control", @type = "email" } })
+                    @Html.ValidationMessageFor(model => model.Username, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group" id="divContrasena" style="display:none;">
+                @Html.LabelFor(model => model.Contrasena, "Password:", htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-6" style="margin-left:40px;">
+                    @Html.PasswordFor(model => model.Contrasena, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Contrasena, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
           </div>
 
             <br />
@@ -226,6 +248,21 @@
                     }
 
                 });
+
+                $("#TipoPuesto").change(function () {
+                    if ($(this).val() == "Supervisor" || $(this).val() == "Oficial") {
+                        $("#Titulo").css("display", "block");
+                        $("#divUsername").css("display", "block");
+                        $("#divContrasena").css("display", "block");
+                    }
+                    else {
+                        $("#divUsername").css("display", "none");
+                        $("#divContrasena").css("display", "none");
+                    }
+                })
+
+
+
             });
         </script>
 }

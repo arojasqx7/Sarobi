@@ -10,14 +10,17 @@ using sarobi1._1.DAL;
 using sarobi1._1.Models;
 using System.Data.Entity.Infrastructure;
 using PagedList;
+using Microsoft.AspNet.Identity;
+using System.Web.Security;
+using Microsoft.AspNet.Identity.Owin;
 
 namespace sarobi1._1.Controllers
 {
     public class BasesController : Controller
     {
         private SarobiContext db = new SarobiContext();
+        private ApplicationUserManager _userManager;
 
-        // GET: Bases
         public ViewResult Index(string sortOrder, string currentFilter, string searchString, int? page)
         {
             ViewBag.CurrentSort = sortOrder;
@@ -34,27 +37,60 @@ namespace sarobi1._1.Controllers
 
             ViewBag.CurrentFilter = searchString;
 
-            var bases = from s in db.Bases
-                        select s;
+            var user = User.Identity.GetUserName();
 
+            if (user == "andrey.rojas.quiros@gmail.com")
+            {
+                var baseee = from b in db.Bases
+                             select b;
+
+                if (!String.IsNullOrEmpty(searchString))
+                {
+                    baseee = baseee.Where(s => s.Nombre.Contains(searchString)
+                                            );
+                }
+                switch (sortOrder)
+                {
+                    case "name_desc":
+                        baseee = baseee.OrderByDescending(s => s.Nombre);
+                        break;
+                    default:
+                        baseee = baseee.OrderBy(s => s.Nombre);
+                        break;
+                }
+
+                int pageSize = 5;
+                int pageNumber = (page ?? 1);
+                return View(baseee.ToPagedList(pageNumber, pageSize));
+            }
+
+
+            else
+            {
+                var IdSup = db.Empleados.Where(i => i.Username == user).Select(i => i.ID).First();
+                var basesFilter = db.Bases.Where(s => s.ID_Supervisor == IdSup);
+            
             if (!String.IsNullOrEmpty(searchString))
             {
-                bases = bases.Where(s => s.Nombre.Contains(searchString)
-                                    );
+                basesFilter = basesFilter.Where(s => s.Nombre.Contains(searchString)
+                                        );
             }
             switch (sortOrder)
             {
                 case "name_desc":
-                    bases = bases.OrderByDescending(s => s.Nombre);
+                    basesFilter = basesFilter.OrderByDescending(s => s.Nombre);
                     break;
                 default:
-                    bases = bases.OrderBy(s => s.Nombre);
+                    basesFilter = basesFilter.OrderBy(s => s.Nombre);
                     break;
             }
+
             int pageSize = 5;
             int pageNumber = (page ?? 1);
-            return View(bases.ToPagedList(pageNumber, pageSize));
+            return View(basesFilter.ToPagedList(pageNumber, pageSize));
         }
+     }
+
 
         // GET: Bases/Details/5
         public ActionResult Details(int? id)
@@ -243,6 +279,20 @@ namespace sarobi1._1.Controllers
             return RedirectToAction("Index");
         }
 
+        public ApplicationUserManager UserManager
+        {
+            get
+            {
+                return _userManager ??
+                    HttpContext.GetOwinContext()
+                    .GetUserManager<ApplicationUserManager>();
+            }
+            private set
+            {
+                _userManager = value;
+            }
+        }
+
         protected override void Dispose(bool disposing)
         {
             if (disposing)
@@ -251,5 +301,7 @@ namespace sarobi1._1.Controllers
             }
             base.Dispose(disposing);
         }
+
+
     }
 }
