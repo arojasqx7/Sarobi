@@ -233,7 +233,7 @@
             $('#txtTel2').mask('9999-9999');
 
             $('.datetimepicker').datetimepicker({
-                format: "YYYY/MM/DD",
+                format: "DD/MM/YYYY",
                 locale: 'es',
             });
 
@@ -250,7 +250,7 @@
                 });
 
                 $("#TipoPuesto").change(function () {
-                    if ($(this).val() == "Supervisor" || $(this).val() == "Oficial") {
+                    if ($(this).val() == "Supervisor" || $(this).val() == "Oficial" || $(this).val() == "Administrativo") {
                         $("#Titulo").css("display", "block");
                         $("#divUsername").css("display", "block");
                         $("#divContrasena").css("display", "block");

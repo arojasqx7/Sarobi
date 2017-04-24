@@ -99,11 +99,7 @@ namespace sarobi1._1.Controllers
             {
                 var user = new ApplicationUser { UserName = empleado.Username, Email = empleado.Username };
                 var result = await UserManager.CreateAsync(user, empleado.Contrasena);
-                //if (result.Succeeded)
-                //{
-                //    await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
-                //}
-                    try
+              try
                 {
                     if (file != null)
                     {

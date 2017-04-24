@@ -35,18 +35,37 @@ namespace sarobi1._1.Controllers
 
             ViewBag.CurrentFilter = Filtros;
 
-            var tracks = from s in db.Trackings
-                            select s;
-            if (!String.IsNullOrEmpty(searchString))
+            var user = User.Identity.GetUserName();
+
+            if (user == "andrey.rojas.quiros@gmail.com")
             {
-                tracks = tracks.Where(s => s.Base.Nombre.Equals(searchString));
+
+                var tracks = from s in db.Trackings
+                             select s;
+                if (!String.IsNullOrEmpty(searchString))
+                {
+                    tracks = tracks.Where(s => s.Base.Nombre.Equals(searchString));
+                }
+
+                int pageSize = 10;
+                int pageNumber = (page ?? 1);
+                return View(tracks.OrderBy(t => t.Base.Nombre).ThenBy(t => t.Fecha).ToPagedList(pageNumber, pageSize));
             }
 
-            int pageSize = 10;
-            int pageNumber = (page ?? 1);
-            //var track = (from t in db.Trackings select t).OrderBy(t => t.Base.Nombre).ThenBy(t => t.Fecha);
-            //return View(track.ToPagedList(pageNumber, pageSize));
-            return View(tracks.OrderBy(t => t.Base.Nombre).ThenBy(t => t.Fecha).ToPagedList(pageNumber, pageSize));
+            else
+            {
+                var IdSup = db.Empleados.Where(i => i.Username == user).Select(i => i.ID).First();
+                var tracks2 = db.Trackings.Where(s=>s.Base.ID_Supervisor == IdSup);
+
+                if (!String.IsNullOrEmpty(searchString))
+                {
+                   tracks2 = tracks2.Where(s => s.Base.Nombre.Equals(searchString));
+                }
+
+                int pageSize = 10;
+                int pageNumber = (page ?? 1);
+                return View(tracks2.OrderBy(t => t.Base.Nombre).ThenBy(t => t.Fecha).ToPagedList(pageNumber, pageSize));
+            }
         }
 
         public JsonResult GetBases()
@@ -66,6 +85,26 @@ namespace sarobi1._1.Controllers
             return Json(basesFilter2.ToList(), JsonRequestBehavior.AllowGet);
             }
         }
+
+        //public JsonResult GetBases2()
+        //{
+        //    var user = User.Identity.GetUserName();
+        //    if (user == "andrey.rojas.quiros@gmail.com")
+        //    {
+        //        var basesFilter1 = from i in db.Bases
+        //                           orderby (i.Nombre)
+        //                           select new { i.ID, i.Nombre };
+        //        return Json(basesFilter1.ToList(), JsonRequestBehavior.AllowGet);
+        //    }
+
+        //    else
+        //    {
+        //        var IdSup = db.Empleados.Where(i => i.Username == user).Select(i => i.ID).First();
+        //        var basesFilter2 = db.Bases.Where(s => s.ID_Supervisor == IdSup).Select(i => new { i.ID, i.Nombre }).OrderBy(i => i.Nombre);
+        //        return Json(basesFilter2.ToList(), JsonRequestBehavior.AllowGet);
+        //    }
+        //}
+
 
         public JsonResult GetEmpleados(int id_base)
         {
@@ -104,6 +143,7 @@ namespace sarobi1._1.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "ID,Horas,Fecha,ID_Base,ID_Empleado")] Tracking tracking)
         {
+
             if (ModelState.IsValid)
             {
                 db.Trackings.Add(tracking);

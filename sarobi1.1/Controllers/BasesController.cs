@@ -25,6 +25,7 @@ namespace sarobi1._1.Controllers
         {
             ViewBag.CurrentSort = sortOrder;
             ViewBag.NameSortParm = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
+            GetSupervisorName();
 
             if (searchString != null)
             {
@@ -43,6 +44,7 @@ namespace sarobi1._1.Controllers
             {
                 var baseee = from b in db.Bases
                              select b;
+
 
                 if (!String.IsNullOrEmpty(searchString))
                 {
@@ -291,6 +293,18 @@ namespace sarobi1._1.Controllers
             {
                 _userManager = value;
             }
+        }
+
+        //private string GetSupervisorName()
+        //{
+        //    var user = User.Identity.GetUserName();
+        //    var supName = db.Bases.Where(i=>i)
+        //}
+
+        public ActionResult GetSupervisorName()
+        {
+            var sups = db.Bases.Include(p => p.Supervisor);
+            return View(sups);
         }
 
         protected override void Dispose(bool disposing)
