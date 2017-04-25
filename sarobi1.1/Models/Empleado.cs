@@ -20,7 +20,7 @@ namespace sarobi1._1.Models
         public string SegundoApellido { get; set; }
 
         [Required(ErrorMessage = "Campo Fecha de Nacimiento es requerido")]
-        [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}", ApplyFormatInEditMode = true)]
+        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
         public DateTime FechaNacimiento { get; set; }
 
         [Required(ErrorMessage = "Campo Sexo es requerido")]
@@ -49,7 +49,7 @@ namespace sarobi1._1.Models
         public string TipoEmpleado { get; set; }
 
         [Required(ErrorMessage = "Campo Fecha de Contratación es requerido")]
-        [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}", ApplyFormatInEditMode = true)]
+        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
         public DateTime FechaContratacion { get; set; }
 
         [DataType(DataType.MultilineText)]

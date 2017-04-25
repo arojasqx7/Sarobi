@@ -172,10 +172,12 @@ namespace sarobi1._1.Controllers
         // POST: Empleados/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ID, PrimerNombre, PrimerApellido, SegundoApellido, FechaNacimiento, Sexo, TipoIdentificacion, NumeroIdentificacion, Nacionalidad, Telefono1, Telefono2, Direccion, Puesto, TipoEmpleado, FechaContratacion, Recomendaciones,Username,Contrasena")] Empleado empleado)
+        public async System.Threading.Tasks.Task<ActionResult> Edit([Bind(Include = "ID, PrimerNombre, PrimerApellido, SegundoApellido, FechaNacimiento, Sexo, TipoIdentificacion, NumeroIdentificacion, Nacionalidad, Telefono1, Telefono2, Direccion, Puesto, TipoEmpleado, FechaContratacion, Recomendaciones,Username,Contrasena")] Empleado empleado)
         {
             if (ModelState.IsValid)
             {
+                var user = new ApplicationUser { UserName = empleado.Username, Email = empleado.Username };
+                var result = await UserManager.CreateAsync(user, empleado.Contrasena);
                 try
                 {
                     db.Entry(empleado).State = EntityState.Modified;
@@ -197,6 +199,14 @@ namespace sarobi1._1.Controllers
                 }
 
             }
+
+            var Email = empleado.Username.Trim();
+            var UserName = empleado.Username.Trim();
+            var Password = empleado.Contrasena.Trim();
+
+            var objNewSupervUser = new ApplicationUser { UserName = UserName, Email = Email };
+            var AdminUserCreateResult = UserManager.Create(objNewSupervUser, Password);
+
             return View(empleado);
         }
 

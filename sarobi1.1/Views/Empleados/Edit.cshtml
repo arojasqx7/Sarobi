@@ -179,7 +179,25 @@
                 </div>
             </div>
 
-    *@
+            *@
+
+            <h5 id="Titulo"><strong>Editar Credenciales de Acceso</strong></h5>
+
+            <div class="form-group" id="divUsername">
+                @Html.LabelFor(model => model.Username, "Username:", htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-6" style="margin-left:40px;">
+                    @Html.EditorFor(model => model.Username, new { htmlAttributes = new { @class = "form-control", @type = "email" } })
+                    @Html.ValidationMessageFor(model => model.Username, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group" id="divContrasena">
+                @Html.LabelFor(model => model.Contrasena, "Password:", htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-6" style="margin-left:40px;">
+                    @Html.EditorFor(model => model.Contrasena, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Contrasena, "", new { @class = "text-danger" })
+                </div>
+            </div>
         </div>
 
         <br />
@@ -210,7 +228,7 @@
             $('#txtTel2').mask('9999-9999');
 
             $('.datetimepicker').datetimepicker({
-                format: "YYYY/MM/DD",
+                format: "DD/MM/YYYY",
                 locale: 'es',
             });
 
@@ -225,6 +243,17 @@
                     }
 
                 });
+
+                jQuery.validator.methods.date = function (value, element) {
+                    var isChrome = /Chrome/.test(navigator.userAgent) && /Google Inc/.test(navigator.vendor);
+                    if (isChrome) {
+                        var d = new Date();
+                        return this.optional(element) || !/Invalid|NaN/.test(new Date(d.toLocaleDateString(value)));
+                    } else {
+                        return this.optional(element) || !/Invalid|NaN/.test(new Date(value));
+                    }
+                };
+
             });
 </script>
 }
