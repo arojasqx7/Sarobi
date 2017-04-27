@@ -69,8 +69,8 @@
                 <h5 style="text-align:center; color:#0059b3;"><strong>Asignación de Oficiales</strong></h5>
                 <table class="table table-bordered table-hover">
                     <tr>
-                        <th>Empleado</th>
-                        <th>Seleccionar</th>
+                        <th class="text-center">Empleado</th>
+                        <th class="text-center">Seleccionar</th>
                         @{
                             int cnt = 0;
                             List<sarobi1._1.Models.AssignedEmpleadoData> empleados = ViewBag.Empleados;
@@ -81,9 +81,9 @@
                                 {
                                     @:</tr><tr>
                                  }
-                                @:<td> @emp.Nombre 
+                                @:<td class="text-center"> @emp.Nombre 
                                 @:</td>
-                                    @:<td>
+                                    @:<td class="text-center">
                                         <input type="checkbox"
                                                name="selectedEmpleados"
                                                value="@emp.EmpleadoID"
