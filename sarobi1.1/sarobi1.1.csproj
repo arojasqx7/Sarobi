@@ -296,6 +296,10 @@
       <DependentUpon>AppReportViewerTracking.aspx</DependentUpon>
     </Compile>
     <Compile Include="Startup.cs" />
+    <Compile Include="ViewModels\DashboardBase.cs" />
+    <Compile Include="ViewModels\DashboardBasesActivas.cs" />
+    <Compile Include="ViewModels\DashboardSupervisor.cs" />
+    <Compile Include="ViewModels\DashboardOficial.cs" />
     <Compile Include="_sarobi1_1DataSet.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -331,6 +335,8 @@
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\font-awesome.min.css" />
     <Content Include="Content\fonts.googleapis.com.css" />
+    <Content Include="Content\logo\bg-image.jpg" />
+    <Content Include="Content\logo\bg-image2.jpg" />
     <Content Include="Content\logo\sarobi.ico" />
     <Content Include="Content\logo\sarobi.png" />
     <Content Include="Content\logo\slider1.jpg" />

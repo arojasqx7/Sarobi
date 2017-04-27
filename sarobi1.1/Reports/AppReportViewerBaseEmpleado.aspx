@@ -12,7 +12,7 @@
                  using(sarobi1._1.DAL.SarobiContext dc = new sarobi1._1.DAL.SarobiContext())
                  {
                      var bases = from i in dc.EmpleadosBases1
-                                 orderby(i.Base.Nombre)
+                                 orderby i.Base.Nombre,i.Empleado.PrimerNombre
                                  select new{i.Base.Nombre,i.Empleado.PrimerNombre,i.Empleado.PrimerApellido,i.Empleado.SegundoApellido};
 
                      ReportViewerBasesXEmpleado.LocalReport.ReportPath = Server.MapPath("~/Reports/BaseEmpleados.rdlc");

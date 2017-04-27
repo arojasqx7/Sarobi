@@ -4,15 +4,82 @@
     Layout = "~/Views/Shared/_Admin2Layout.cshtml";
 }
 
+<head>
+    <style>
+    .notice {
+    padding: 15px;
+    background-color: #fafafa;
+    border-left: 6px solid #7f7f84;
+    margin-bottom: 10px;
+    -webkit-box-shadow: 0 5px 8px -6px rgba(0,0,0,.2);
+    -moz-box-shadow: 0 5px 8px -6px rgba(0,0,0,.2);
+    box-shadow: 0 5px 8px -6px rgba(0,0,0,.2);
+    }
+    .notice:hover{
+        background-color:#ededed;
+    }
+    .notice-success {
+    border-color: #80D651;
+    }
+    .notice-success>strong {
+    color: #80D651;
+    }
+    .notice-info {
+    border-color: #45ABCD;
+    }
+    .notice-info>strong {
+    color: #45ABCD;
+    }
+    .notice-warning {
+    border-color: #FEAF20;
+    }
+    .notice-warning>strong {
+    color: #FEAF20;
+    }
+    .notice-danger {
+    border-color: #d73814;
+    }
+    .notice-danger>strong {
+    color: #d73814;
+    }
+    </style>
+</head>
+
 <h2>Reportes</h2>
 
-<br />
-<a href="~/Reports/AppReportViewerEmpleados.aspx">Reporte Oficiales...</a>
-<br />
-<a href="~/Reports/AppReportViewerSupervisores.aspx">Reporte Supervisores...</a>
-<br />
-<a href="~/Reports/AppReportViewerBases.aspx">Reporte Bases...</a>
-<br />
-<a href="~/Reports/AppReportViewerBaseEmpleado.aspx">Reporte Oficiales Asignados a Base...</a>
-<br />
-<a href="~/Reports/AppReportViewerTracking.aspx">Reporte Horas...</a>
+<br /><br />
+@*<a href="~/Reports/AppReportViewerEmpleados.aspx">Reporte Oficiales...</a>
+    <br />
+    <a href="~/Reports/AppReportViewerSupervisores.aspx">Reporte Supervisores...</a>
+    <br />
+    <a href="~/Reports/AppReportViewerBases.aspx">Reporte Bases...</a>
+    <br />
+    <a href="~/Reports/AppReportViewerBaseEmpleado.aspx">Reporte Oficiales Asignados a Base...</a>
+    <br />
+    <a href="~/Reports/AppReportViewerTracking.aspx">Reporte Horas...</a>
+
+    <br /><br /> *@
+
+<div class="container">
+    <div class="notice notice-success" onclick="location.href = 'AppReportViewerEmpleados.aspx'">
+        <i class="fa fa-child fa-lg" aria-hidden="true"></i>
+         <strong>   Reporte</strong>  Oficiales...
+    </div>
+    <div class="notice notice-danger" onclick="location.href = 'AppReportViewerSupervisores.aspx'">
+        <i class="fa fa-taxi fa-lg" aria-hidden="true"></i>
+         <strong>   Reporte </strong> Supervisores...
+    </div>
+    
+    <div class="notice notice-info" onclick="location.href = 'AppReportViewerBases.aspx'">
+        <i class="fa fa-university fa-lg" aria-hidden="true"></i>
+         <strong>   Reporte</strong>  Bases...
+    </div>
+    <div class="notice notice-warning" onclick="location.href = 'AppReportViewerBaseEmpleado.aspx'">
+        <i class="fa fa-sitemap fa-lg" aria-hidden="true"></i>
+        <strong>    Reporte</strong>  Oficiales Asignados a Base...
+    </div>
+    <div class="notice notice-danger" onclick="location.href = 'AppReportViewerTracking.aspx'">
+         <i class="fa fa-clock-o fa-lg" aria-hidden="true"></i>
+         <strong>   Reporte</strong>  Horas Trackeadas...
+    </div>
+</div>
