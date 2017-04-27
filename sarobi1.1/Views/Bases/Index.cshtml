@@ -36,9 +36,9 @@
         <th>
             @Html.ActionLink("Teléfono Contacto", "Index", new { sortOrder = ViewBag.NameSortParm, currentFilter = ViewBag.CurrentFilter })
         </th>
-        <th>
+        @*<th>
             @Html.ActionLink("Nombre Supervisor", "Index", new { sortOrder = ViewBag.NameSortParm, currentFilter = ViewBag.CurrentFilter })
-        </th>
+        </th>*@
         <th></th>
     </tr>
 
@@ -62,9 +62,9 @@
             @Html.DisplayFor(modelItem => item.Telefono)
         </td>
 
-        <td>
+        @*<td>
            @Html.DisplayFor(modelItem => item.Supervisor.FullName)
-        </td>
+        </td>*@
 
         <td>
         @if (User.IsInRole("Supervisor"))
@@ -74,9 +74,9 @@
 
          else 
             {
-                @Html.ActionLink(" ", "Details", new { id = item.ID }, new { @class = "glyphicon glyphicon-list-alt" ,@style="margin-right:10px;"})    
-                @Html.ActionLink(" ", "Edit", new { id = item.ID }, new { @class = "glyphicon glyphicon-edit", @style = "margin-right:10px;" })    
-                @Html.ActionLink(" ", "Delete", new { id = item.ID }, new { @class = "glyphicon glyphicon-trash" })     
+                @Html.ActionLink("Ver Detalle", "Details", new { id = item.ID }, new {@style="margin-right:10px;"})    
+                @Html.ActionLink("Editar", "Edit", new { id = item.ID }, new {@style = "margin-right:10px;" })    
+                @Html.ActionLink("Borrar", "Delete", new { id = item.ID })     
 
             }
         </td>

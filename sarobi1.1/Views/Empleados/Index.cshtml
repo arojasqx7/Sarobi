@@ -56,9 +56,9 @@
             @Html.DisplayFor(modelItem => item.Puesto)
         </td>
         <td>
-            @Html.ActionLink(" ", "Edit", new { id = item.ID }, new { @class = "glyphicon glyphicon-edit" }) |
-            @Html.ActionLink(" ", "Details", new { id = item.ID }, new { @class = "glyphicon glyphicon-list-alt" }) |
-            @Html.ActionLink(" ", "Delete", new { id = item.ID }, new { @class = "glyphicon glyphicon-trash"})
+            @Html.ActionLink("Ver Detalles", "Details", new { id = item.ID}) |
+            @Html.ActionLink("Editar", "Edit", new { id = item.ID }) |
+            @Html.ActionLink("Borrar", "Delete", new { id = item.ID })
         </td>
     </tr>
 }
