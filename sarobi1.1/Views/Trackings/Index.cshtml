@@ -30,40 +30,40 @@
 <br /><br />
 <table class="table table-condensed table-hover">
     <tr>
-        <th>
-            Base
+        <th class="text-center">
+            BASE
         </th>
-        <th>
-            Oficial
+        <th class="text-center">
+            OFICIAL
         </th>
 
-        <th>
-            Horas Reportadas
+        <th class="text-center">
+            HORAS REPORTADAS
         </th>
-        <th>
-            Día
+        <th class="text-center">
+            DÍA
         </th>
         <th></th>
     </tr>
 
 @foreach (var item in Model) {
     <tr>
-        <td>
+        <td class="text-center">
             @Html.DisplayFor(modelItem => item.Base.Nombre)
         </td>
-        <td>
+        <td class="text-center">
             @Html.DisplayFor(modelItem => item.Empleado.FullName)
         </td>
-        <td>
+        <td class="text-center">
             @Html.DisplayFor(modelItem => item.Horas)
         </td>
-        <td>
+        <td class="text-center">
             @Html.DisplayFor(modelItem => item.Fecha)
         </td>
-        <td>
+        <td class="text-right">
           @*  @Html.ActionLink(" ", "Edit", new { id = item.ID }, new { @class = "glyphicon glyphicon-edit" }) | *@  
-            @Html.ActionLink(" ", "Details", new { id = item.ID }, new { @class = "glyphicon glyphicon-list-alt" }) |
-            @Html.ActionLink(" ", "Delete", new { id = item.ID }, new { @class = "glyphicon glyphicon-trash"})
+            @Html.ActionLink("Ver Detalles", "Details", new { id = item.ID }) |
+            @Html.ActionLink("Borrar", "Delete", new { id = item.ID })
         </td>
     </tr>
 }
