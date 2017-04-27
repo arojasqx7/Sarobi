@@ -5,6 +5,68 @@
 
 }
 
+<head>
+    <style type="text/css">
+        #bg {
+            position: fixed;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+             z-index:-1;
+        }
+
+            #bg img {
+                position: absolute;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                margin: auto;
+                min-width: 50%;
+                min-height: 50%;
+            }
+            hr{
+                display:none;
+            }
+            #loginForm{
+              position: relative;
+              width: 350px;
+              margin: 0 auto;
+              background: rgba(130,130,130,.3);
+              padding: 5px 22px;
+              border: 1px solid;
+              border-top-color: rgba(255,255,255,.4);
+              border-left-color: rgba(255,255,255,.4);
+              border-bottom-color: rgba(60,60,60,.4);
+              border-right-color: rgba(60,60,60,.4);
+            }
+
+            #loginForm .form-group{
+              width: 390px;
+              padding: 8px 24px 8px 10px;
+            }
+
+            #loginForm .form-group:focus { background-color: rgba(0,0,0,.4); }
+
+            #loginForm button[type=submit] {
+              width: 265px;
+              margin-bottom: 0;
+              letter-spacing: .05em;
+              text-shadow: 0 1px 0 #133d3e;
+              text-transform: uppercase;
+              cursor: pointer;
+              background-color: #4d5b76!important;
+              border-color: #4d5b76;
+            }
+    </style>
+</head> 
+
+<div id="bg">
+    <img src="~/Content/logo/bg-image2.jpg">
+</div>
+
+
 <br /><br />
 <div class="row">
     <div class="col-md-8">
@@ -12,46 +74,28 @@
             @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
             {
                 @Html.AntiForgeryToken()
-
-                <hr />
-
-                <div class="panel panel-info">
-                    <div class="panel-heading">
-                        <div class="panel-title" style="text-align:center;">Inicio de Sesión</div>
-                    </div>
-
-                    <div class="panel-body" style="margin-left:12px;">
-
-                        @*<h2 style="text-align:center;"><img src="~/Content/logo/sarobi.png" /></h2>*@
-                        <br />
-
+                      @Html.ValidationSummary(true, "", new { @class = "text-danger", @style= "color:#fff;text-align:center;" })
                         <div class="form-group">
                             <div class="col-md-10 input-group">
                                 <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
-                                @Html.TextBoxFor(m => m.Email, new { @class = "form-control", @placeholder="Email"})
+                                @Html.TextBoxFor(m => m.Email, new { @class = "form-control",@id="txtEmail", @placeholder="Correo Electrónico"})
                                 @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
                             </div>
                         </div>
 
-
                         <div class="form-group">
                             <div class="col-md-10 input-group">
                                 <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
-                                @Html.PasswordFor(m => m.Password, new { @class = "form-control", @placeholder = "Contraseña" })
+                                @Html.PasswordFor(m => m.Password, new { @class = "form-control",@id= "txtPass", @placeholder = "Contraseña" })
                                 @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
                             </div>
                         </div>
 
-                        <br />
                         <div class="form-group">
-                            <div class="col-md-offset-2 col-md-10">
-                                <button type="submit" class="btn btn-primary" style="width:260px;margin-left:-55px;"> <span class="glyphicon glyphicon-log-in"> </span> Log In</button>
+                            <div class="col-md-10">
+                                <button type="submit" class="btn btn-primary"> <span class="glyphicon glyphicon-log-in"> </span> Log In</button>
                             </div>
                         </div>
-                        <br />
-                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-                    </div>
-                </div>
 
                 @* Enable this once you have account confirmation enabled for password reset functionality
                     <p>
