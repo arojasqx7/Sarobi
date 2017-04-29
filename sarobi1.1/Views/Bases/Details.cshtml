@@ -37,12 +37,18 @@
         </dd>
 
         <dt>
-            <br />
+            Dirección:
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Direccion)
+        </dd>
+
+        <dt>
             Oficiales Asignados:
         </dt>
 
         <dd>
-            <br />
             @{
                 foreach (var emp in Model.Empleado)
                 {

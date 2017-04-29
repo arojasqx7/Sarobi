@@ -296,6 +296,7 @@
       <DependentUpon>AppReportViewerTracking.aspx</DependentUpon>
     </Compile>
     <Compile Include="Startup.cs" />
+    <Compile Include="ViewModels\BaseEmp.cs" />
     <Compile Include="ViewModels\DashboardBase.cs" />
     <Compile Include="ViewModels\DashboardBasesActivas.cs" />
     <Compile Include="ViewModels\DashboardSupervisor.cs" />
