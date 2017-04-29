@@ -10,6 +10,7 @@ using sarobi1._1.DAL;
 using sarobi1._1.Models;
 using PagedList;
 using Microsoft.AspNet.Identity;
+using sarobi1._1.ViewModels;
 
 namespace sarobi1._1.Controllers
 {
@@ -86,33 +87,14 @@ namespace sarobi1._1.Controllers
             }
         }
 
-        //public JsonResult GetBases2()
-        //{
-        //    var user = User.Identity.GetUserName();
-        //    if (user == "andrey.rojas.quiros@gmail.com")
-        //    {
-        //        var basesFilter1 = from i in db.Bases
-        //                           orderby (i.Nombre)
-        //                           select new { i.ID, i.Nombre };
-        //        return Json(basesFilter1.ToList(), JsonRequestBehavior.AllowGet);
-        //    }
-
-        //    else
-        //    {
-        //        var IdSup = db.Empleados.Where(i => i.Username == user).Select(i => i.ID).First();
-        //        var basesFilter2 = db.Bases.Where(s => s.ID_Supervisor == IdSup).Select(i => new { i.ID, i.Nombre }).OrderBy(i => i.Nombre);
-        //        return Json(basesFilter2.ToList(), JsonRequestBehavior.AllowGet);
-        //    }
-        //}
-
-
         public JsonResult GetEmpleados(int id_base)
         {
-            var empleados = from a in db.EmpleadosBases1 where a.BaseID == id_base orderby (a.Empleado.PrimerNombre) select new { a.Empleado.ID, FullName2= a.Empleado.PrimerNombre + " " + a.Empleado.PrimerApellido + " " + a.Empleado.SegundoApellido};
-            return Json(empleados.ToList(), JsonRequestBehavior.AllowGet);
+            // var empleados = from a in db.EmpleadosBases1 where a.BaseID == id_base orderby (a.Empleado.PrimerNombre) select new { a.Empleado.ID, FullName2= a.Empleado.PrimerNombre + " " + a.Empleado.PrimerApellido + " " + a.Empleado.SegundoApellido};
+            string query = "SELECT e.ID, e.PrimerNombre + ' ' + e.PrimerApellido + ' ' + e.SegundoApellido AS FullName2 FROM Empleado_Base eb JOIN Empleado e ON eb.EmpleadoID = e.ID WHERE BaseID =" + id_base;
+            IEnumerable<BaseEmp> data = db.Database.SqlQuery<BaseEmp>(query);
+            return Json(data.ToList(), JsonRequestBehavior.AllowGet);
         }
 
-        // GET: Trackings/Details/5
         public ActionResult Details(int? id)
         {
             if (id == null)

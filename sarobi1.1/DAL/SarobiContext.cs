@@ -32,5 +32,6 @@ namespace sarobi1._1.DAL
                  .ToTable("Empleado_Base"));
             base.OnModelCreating(modelBuilder);
         }
+
     }
 }

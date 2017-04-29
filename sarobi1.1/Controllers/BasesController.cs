@@ -13,6 +13,9 @@ using PagedList;
 using Microsoft.AspNet.Identity;
 using System.Web.Security;
 using Microsoft.AspNet.Identity.Owin;
+using System.Data.Entity.Core;
+using System.Data.Entity.Core.Objects;
+using System.Threading.Tasks;
 
 namespace sarobi1._1.Controllers
 {
@@ -160,7 +163,7 @@ namespace sarobi1._1.Controllers
             .Where(i => i.ID == id)
             .Single();
 
-            PopulateAssignedEmpleadoData(basee);
+           PopulateAssignedEmpleadoData(basee);
 
             if (basee == null)
             {
@@ -190,25 +193,27 @@ namespace sarobi1._1.Controllers
         // POST: Bases/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int? id, string[] selectedEmpleados, string[] selectedTracking)
+        public async Task<ActionResult> Edit([Bind(Include ="Nombre, Encargado, Telefono, Direccion, ID_Supervisor")] Base test, int? id, string[] selectedEmpleados)
         {
+           // string[] fieldsToBind = new string []{ "Nombre, Encargado, Telefono, Direccion, ID_Supervisor" };
+
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            var BaseToUpdate = db.Bases
-               .Include(i => i.Empleado)
-               .Where(i => i.ID == id)
-               .Single();
+            //var BaseToUpdate = db.Bases
+            //   .Include(i => i.Empleado)
+            //   .Where(i => i.ID == id)
+            //   .Single();
 
+              test = await db.Bases.FindAsync(id);
 
-            if (TryUpdateModel(BaseToUpdate,"",
-               new string[] { "Nombre, Encargado, Telefono, Direccion, ID_Supervisor" }))
+            if (TryUpdateModel(test))
             {
                 try
                 {
-                    UpdateBaseEmpleados(selectedEmpleados, BaseToUpdate);
-                    db.SaveChanges();
+                    UpdateBaseEmpleados(selectedEmpleados, test);
+                   await db.SaveChangesAsync();
 
                     return RedirectToAction("Index");
                 }
@@ -218,9 +223,9 @@ namespace sarobi1._1.Controllers
                     ModelState.AddModelError("", "Unable to save changes. Try again, and if the problem persists, see your system administrator.");
                 }
             }
-            PopulateAssignedEmpleadoData(BaseToUpdate);
+            PopulateAssignedEmpleadoData(test);
             ViewBag.ID_Supervisor = new SelectList(db.Empleados.Where(s => s.Puesto.Equals("Supervisor")), "Id", "FullName");
-            return View(BaseToUpdate);
+            return View(test);
         }
 
         private void UpdateBaseEmpleados(string[] selectedEmpleados, Base BaseToUpdate)

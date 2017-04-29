@@ -11,9 +11,12 @@
              void Page_Load(object sender,EventArgs e){
                  using(sarobi1._1.DAL.SarobiContext dc = new sarobi1._1.DAL.SarobiContext())
                  {
-                     var bases = from i in dc.EmpleadosBases1
-                                 orderby i.Base.Nombre,i.Empleado.PrimerNombre
-                                 select new{i.Base.Nombre,i.Empleado.PrimerNombre,i.Empleado.PrimerApellido,i.Empleado.SegundoApellido};
+                       var bases = from i in dc.EmpleadosBases1
+                               orderby i.Base.Nombre,i.Empleado.PrimerNombre
+                                select new{i.Base.Nombre,i.Empleado.PrimerNombre,i.Empleado.PrimerApellido,i.Empleado.SegundoApellido};
+
+                   //  var baseQuery = "SELECT Base.Nombre,Empleado.PrimerNombre,Empleado.PrimerApellido,Empleado.SegundoApellido FROM Empleado_Base JOIN Empleado ON Empleado_Base.EmpleadoID = Empleado.ID JOIN Base ON Empleado_Base.BaseID = Base.ID";
+
 
                      ReportViewerBasesXEmpleado.LocalReport.ReportPath = Server.MapPath("~/Reports/BaseEmpleados.rdlc");
                      ReportViewerBasesXEmpleado.LocalReport.DataSources.Clear();
